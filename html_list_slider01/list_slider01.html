@@ -8,8 +8,8 @@
         <section class="header">
             <h1>リストサンプル</h1>
         </section>
-        <section class="TG001-list-container">
-            <section class="TG001-list-title">
+        <section class="TG002-list-container">
+            <section class="TG002-list-title">
                 <div>
                     <p class="item-title">タイトル</p>
                     <p class="item-remarks">備考</p>    
@@ -23,62 +23,80 @@
                     <p class="item-todo-update">更新日時</p>                                    
                 </div>
             </section>
-            <section class="TG001-list-body">
+            <section class="TG002-list-body">
                 <ul>
-                <li>
-                    <div class="TG001-item-body">
-                        <div class="TG001-back-menu-container">
-                            <p class="TG001-back-menu-01">変更</p>
-                            <p class="TG001-back-menu-02">削除</p>
+                    <li class="TG002-item-body">
+                        <div class="TG002-back-menu-container">
+                            <p class="TG002-back-menu-01">変更</p>
+                            <p class="TG002-back-menu-02">削除</p>
                         </div>
-                        <div class="TG001-item-label-container">
+                        <div class="TG002-list-item-container">
                             <div>
-                                <p class="TG001-item-label item-title">タイトル</p>
-                                <p class="TG001-item-label item-remarks">備考</p>    
+                                <p class="TG002-item-label item-title">タイトル</p>
+                                <p class="TG002-item-label item-remarks">備考</p>
                             </div>
                             <div>
-                                <input type="checkbox" class="TG001-item-label item-select">
-                                <p class="TG001-item-label item-priority">普通</p>
-                                <p class="TG001-item-label item-status">未着手</p>
-                                <p class="TG001-item-label item-todo-start"></p>
-                                <p class="TG001-item-label item-todo-end"></p>
-                                <p class="TG001-item-label item-todo-update">2022-06-11 20:00</p>                                    
+                                <input type="checkbox" class="item-select">
+                                <p class="TG002-item-label item-priority">普通</p>
+                                <p class="TG002-item-label item-status">未着手</p>
+                                <p class="TG002-item-label item-todo-start"></p>
+                                <p class="TG002-item-label item-todo-end"></p>
+                                <p class="TG002-item-label item-todo-update">2022-06-11 20:00</p>                                    
                             </div>
                         </div>
-                    </div>
-                </li>
+                    </li>
+                    <li class="TG002-item-body">
+                        <div class="TG002-back-menu-container">
+                            <p class="TG002-back-menu-01">変更</p>
+                            <p class="TG002-back-menu-02">削除</p>
+                        </div>
+                        <div class="TG002-list-item-container">
+                            <div>
+                                <p class="TG002-item-label item-title">タイトル #2</p>
+                                <p class="TG002-item-label item-remarks">備考 #2</p>
+                            </div>
+                            <div>
+                                <input type="checkbox" class="item-select">
+                                <p class="TG002-item-label item-priority">低い</p>
+                                <p class="TG002-item-label item-status">未着手</p>
+                                <p class="TG002-item-label item-todo-start"></p>
+                                <p class="TG002-item-label item-todo-end"></p>
+                                <p class="TG002-item-label item-todo-update">2022-06-15 20:44</p>                                    
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </section>
         </section>
             <script>
-function TG001_clickEvent(event) {
+function TG002_clickEvent(event) {
     // console.log(event);
     let target = event.target;
-    if (target.classList.contains('TG001-item-label')) {
-        let parent = target.parentNode;
+    if (target.classList.contains('TG002-item-label')) {
+        let div = target.parentNode.parentNode;
         let ul = target.closest('ul');
-        let els = ul.getElementsByClassName('TG001-item-label-container');
+        let els = ul.getElementsByClassName('TG002-list-item-container');
         for (let index = 0; index < els.length; ++index) {
-            if (els[index] !== parent) {
+            if (els[index] !== div) {
                 els[index].classList.remove('active');
             }
         }
-        parent.classList.toggle('active');
-    } else if (target.classList.contains('TG001-back-menu-01')) {
+        div.classList.toggle('active');
+    } else if (target.classList.contains('TG002-back-menu-01')) {
         console.log(target.innerText);
-        let p = target.closest('.TG001-item-body');
-        let els = p.getElementsByClassName('TG001-item-label-container');
+        let li = target.closest('.TG002-item-body');
+        let els = li.getElementsByClassName('TG002-list-item-container');
         els[0].classList.remove('active');
-    } else if (target.classList.contains('TG001-back-menu-02')) {
+    } else if (target.classList.contains('TG002-back-menu-02')) {
         console.log(target.innerText);
-        let p = target.closest('.TG001-item-body');
-        let els = p.getElementsByClassName('TG001-item-label-container');
+        let li = target.closest('.TG002-item-body');
+        let els = li.getElementsByClassName('TG002-list-item-container');
         els[0].classList.remove('active');
     }
 }
 window.addEventListener('load', (event) => {
     console.log('start list slider sample');
-    document.addEventListener('click', TG001_clickEvent);
+    document.addEventListener('click', TG002_clickEvent);
 });
             </script>
         </section>
