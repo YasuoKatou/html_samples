@@ -89,6 +89,14 @@ body {
     background-color: orange;
 }
 
+.TG002-item-vert-middle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    flex-basis: 2rem;
+}
+
 .TG002-list-item-container {
     width: 100%;
     height: 2rem;
@@ -100,6 +108,10 @@ body {
     left: 0;
     transition: 500ms;
     background-color: white;
+}
+
+.TG002-item-body:nth-child(2n) .TG002-list-item-container {
+    background-color: seashell;
 }
 
 .TG002-list-item-container.active {
@@ -132,7 +144,6 @@ body {
 }
 
 .TG002-list-item-container .item-select {
-    flex-basis: 2rem;
 }
 
 .TG002-list-item-container .item-priority {
