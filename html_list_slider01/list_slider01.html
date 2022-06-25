@@ -3,12 +3,20 @@
     <head>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="list_slider01.css">
+        <style type="text/css">
+            <!--
+            body > div > p {
+                height: 1rem;
+            }
+            -->
+        </style>
     </head>
     <body>
         <section class="header">
             <h1>リストサンプル</h1>
         </section>
-        <div style="height: auto; background-color: yellow;">固定の高さ(auto)の領域
+        <div style="height: auto; background-color: yellow;">
+            <p>固定の高さ(auto = 1rem × 8 行)の領域</p>
             <p>2</p><p>3</p><p>4</p><p>5</p><p>6</p><p>7</p><p>8</p>
         </div>
         <section class="TG002-list-container">
@@ -163,7 +171,8 @@
                 -->
             </ul>
         </section>
-        <div style="height:  auto; background-color: blue; margin-top: 1rem;">固定の高さの領域（フッター, 2rem）
+        <div style="margin-top: 1rem; height: auto; background-color: blue;">
+            <p>固定の高さの領域（フッター, 2rem）</p>
             <p>2</p>
         </div>
             <script>
