@@ -82,7 +82,7 @@ function HSL01_show_page(className) {
     let c = els[0];
     c.classList.remove('HSL01-slide-page-hidden');
 }
-function HSL01_do_slide(className) {
+function HSL01_do_slide(className, inOut) {
     let els = document.getElementsByClassName('HSL01-slide-container');
     if (els.length !== 1) {
         console.error('no found slide container');
@@ -91,12 +91,21 @@ function HSL01_do_slide(className) {
     let c = els[0];
     let rmList = [];
     c.classList.forEach(clsName => {
-        if (clsName.match(/-slidein$/)) {
+        if (clsName.match(/-slidein$|-slideout$/)) {
             rmList.push(clsName);
         }
     });
     c.classList.remove(...rmList);
-    c.classList.add(className + '-slidein');
+    c.classList.add(className + '-slide' + inOut);
+}
+function HSL01_is_page_actice(target) {
+    const iter = target.classList.values();
+    for (let v = iter.next(); !v.done; v = iter.next()) {
+        if (v.value.match(/-tag-active$/)) {
+            return true;
+        }
+    }
+    return false;
 }
 function HSL01_clickEvent(event) {
     let target = event.target;
@@ -107,12 +116,18 @@ function HSL01_clickEvent(event) {
         slidePage = 'HSL01-slide-page02';
     }
     if (slidePage) {
-        HSL01_show_slide_body();
-        HSL01_hide_page();
-        HSL01_clear_active_tag();
-        HSL01_show_page(slidePage);
-        HSL01_do_slide(slidePage);
-        target.classList.add(slidePage + '-tag-active');
+        if (HSL01_is_page_actice(target)) {
+            HSL01_hide_page();
+            HSL01_clear_active_tag();
+            HSL01_do_slide(slidePage, 'out');
+        } else {
+            HSL01_show_slide_body();
+            HSL01_hide_page();
+            HSL01_clear_active_tag();
+            HSL01_show_page(slidePage);
+            HSL01_do_slide(slidePage, 'in');
+            target.classList.add(slidePage + '-tag-active');
+        }
     }
 }
 window.addEventListener('load', (event) => {

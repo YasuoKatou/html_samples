@@ -109,6 +109,11 @@ form {
 
 .HSL01-slide-page01-slidein {
     animation: HSL01-slide-page01-slidein-animation var(--HSL01-slide--animation-time) both;
+    animation-direction: normal;
+}
+.HSL01-slide-page01-slideout {
+    animation: HSL01-slide-page01-slidein-animation var(--HSL01-slide--animation-time) both;
+    animation-direction: reverse;
 }
 @keyframes HSL01-slide-page01-slidein-animation {
     0% {
@@ -121,6 +126,11 @@ form {
 
 .HSL01-slide-page02-slidein {
     animation: HSL01-slide-page02-slidein-animation var(--HSL01-slide--animation-time) both;
+    animation-direction: normal;
+}
+.HSL01-slide-page02-slideout {
+    animation: HSL01-slide-page02-slidein-animation var(--HSL01-slide--animation-time) both;
+    animation-direction: reverse;
 }
 @keyframes HSL01-slide-page02-slidein-animation {
     0% {
