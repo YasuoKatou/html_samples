@@ -27,9 +27,19 @@ form {
 }
 
 :root {
+    --HSL01-MEMBER-LISTMERGIN: 0.5rem;
+    --HSL01-CORP-LABEL-WIDTH: 10rem;
+    --HSL01-WOKER-LABEL-WIDTH: 8rem;
+    --HSL01-NICKNAME-LABEL-WIDTH: 5rem;
+
+    --HSL01-PHASE-LISTMERGIN: 0.5rem;
+
     --HSL01-slider-tag-size: 32px;
-    --HSL01-slide-page01-width: 200px;
-    --HSL01-slide-page02-width: 100px;
+    --HSL01-slide-page01-width: calc(calc(var(--HSL01-MEMBER-LISTMERGIN) * 2)
+         + var(--HSL01-CORP-LABEL-WIDTH)
+         + var(--HSL01-WOKER-LABEL-WIDTH)
+         + var(--HSL01-NICKNAME-LABEL-WIDTH));
+    --HSL01-slide-page02-width: var(--HSL01-slide-page01-width);
     --HSL01-slide-body-width: max(var(--HSL01-slide-page01-width), var(--HSL01-slide-page02-width));
     --HSL01-slide-page01-bg-color: aqua;
     --HSL01-slide-page02-bg-color: bisque;
@@ -71,8 +81,19 @@ form {
     justify-content: flex-end;
 }
 
+.HSL01-slide-page-body h3 {
+    text-align: center;
+    height: 2rem ;
+}
+
 .HSL01-slide-page-hidden {
     visibility: hidden;
+}
+
+.HSL01-list-icon {
+    width: 0.6rem;
+    height: 0.6rem;
+    margin-right: 0.5rem;
 }
 
 .HSL01-slide-page01 {
@@ -81,10 +102,55 @@ form {
     height:100%;
 }
 
+.HSL01-slide-page01 ul {
+    margin: 0 var(--HSL01-MEMBER-LISTMERGIN);
+}
+
+.HSL01-slide-page01 li {
+    display: flex;
+    flex-direction: row;
+}
+
+.HSL01-slide-page01 .title {
+    font-weight: bolder;
+}
+
+.HSL01-slide-page01 li > p:first-child {
+    width: var(--HSL01-CORP-LABEL-WIDTH);
+}
+
+.HSL01-slide-page01 li > p:nth-child(2) {
+    width: var(--HSL01-WOKER-LABEL-WIDTH);
+}
+
+.HSL01-slide-page01 li > p:last-child {
+    width: var(--HSL01-NICKNAME-LABEL-WIDTH);
+}
+
+.HSL01-slide-page01-add-member {
+    width: var(--HSL01-slide-page01-width);
+}
+
+.HSL01-slide-page01-add-member > img {
+    display: block;
+    margin-left: auto;
+    margin-right: 1rem;
+    height: 1rem;
+    width: 1rem;
+}
+
 .HSL01-slide-page02 {
     background-color: var(--HSL01-slide-page02-bg-color);
     width: var(--HSL01-slide-page02-width);
     height:100%;
+}
+
+.HSL01-slide-page02 ul {
+    margin: 0 var(--HSL01-PHASE-LISTMERGIN);
+}
+
+.HSL01-slide-page02 li {
+    list-style: none;
 }
 
 .HSL01-slide-tag {
