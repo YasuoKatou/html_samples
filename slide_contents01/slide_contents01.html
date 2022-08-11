@@ -9,6 +9,58 @@
             <h1>スライドコンテンツサンプル</h1>
         </section>
         <div class="HSL01-container">
+            <div class="HSL01-body">
+<table id="HSL01-body-table">
+    <tr>
+        <th>No</th>
+        <th>作業名</th>
+        <th>担当</th>
+        <th>工数</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>要件定義</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>外部設計</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>製造・単体テスト</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>4-1</td>
+        <td>クライアント</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>4-1-1</td>
+        <td>ログイン画面</td>
+        <td>TKC-A</td>
+        <td>24</td>
+    </tr>
+    <tr>
+        <td>4-2</td>
+        <td>サーバ</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>4-2-1</td>
+        <td>グイン処理</td>
+        <td>IWA-A</td>
+        <td>16</td>
+    </tr>
+</table>
+            </div>
             <div class="HSL01-slide-container">
                 <div class="HSL01-slide-body">
                     <div class="HSL01-slide-page-body">
@@ -50,6 +102,41 @@
             </div>
         </div>
         <script>
+function HSL01_init_getWorkItems() {
+    let items = [];
+    // 作業項目の一覧を取得
+    let tags = document.getElementsByClassName('HSL01-slide-page02');
+    if (tags.length !== 1) {
+        alert('HSL01-slide-page02 class not found !');
+        return items;
+    }
+    tags = tags.item(0).getElementsByTagName('ul');
+    if (tags.length !== 1) {
+        alert('list tag not found !');
+        return items;
+    }
+    tags = tags.item(0).getElementsByTagName('li');
+    if (tags.length < 1) {
+        alert('no list item (li tag) not found !');
+        return items;
+    }
+    //alert(tags.length);
+    for (var liTag of tags) {
+        items.push(liTag.textContent);
+    }
+    return items;
+}
+
+function HSL01_init_body() {
+    //alert('HSL01_init_body function');
+    let table = document.getElementById("HSL01-body-table");
+    if (!table) {
+        alert('HSL01-body-table id not found !');
+        return;
+    }
+    let workItemList = HSL01_init_getWorkItems();
+    alert(workItemList);
+}
 
 function HSL01_show_slide_body() {
     let els = document.getElementsByClassName('HSL01-slide-body');
@@ -153,6 +240,7 @@ function HSL01_clickEvent(event) {
 }
 window.addEventListener('load', (event) => {
     console.log('start content slider sample');
+    HSL01_init_body();
     document.addEventListener('click', HSL01_clickEvent);
 });
         </script>

@@ -47,9 +47,18 @@ form {
 }
 
 .HSL01-container {
-    width: calc(var(--HSL01-slide-body-width) + var(--HSL01-slider-tag-size));
+    width: 100%;
     height: 100%;
     position: relative;
+}
+
+.HSL01-body {
+    position: absolute;
+    top: 0;
+    left: var(--HSL01-slider-tag-size);
+    background-color: aliceblue;
+    height: 100%;
+    width: calc(100% - var(--HSL01-slider-tag-size));
 }
 
 .HSL01-slide-container {
