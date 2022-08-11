@@ -11,54 +11,58 @@
         <div class="HSL01-container">
             <div class="HSL01-body">
 <table id="HSL01-body-table">
-    <tr>
-        <th>No</th>
-        <th>作業名</th>
-        <th>担当</th>
-        <th>工数</th>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>要件定義</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>外部設計</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>製造・単体テスト</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>4-1</td>
-        <td>クライアント</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>4-1-1</td>
-        <td>ログイン画面</td>
-        <td>TKC-A</td>
-        <td>24</td>
-    </tr>
-    <tr>
-        <td>4-2</td>
-        <td>サーバ</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>4-2-1</td>
-        <td>グイン処理</td>
-        <td>IWA-A</td>
-        <td>16</td>
-    </tr>
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>作業名</th>
+            <th>担当</th>
+            <th>工数</th>
+        </tr>    
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>要件定義</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>外部設計</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>製造・単体テスト</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>4-1</td>
+            <td>クライアント</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>4-1-1</td>
+            <td>ログイン画面</td>
+            <td>TKC-A</td>
+            <td>24</td>
+        </tr>
+        <tr>
+            <td>4-2</td>
+            <td>サーバ</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>4-2-1</td>
+            <td>グイン処理</td>
+            <td>IWA-A</td>
+            <td>16</td>
+        </tr>    
+    </tbody>
 </table>
             </div>
             <div class="HSL01-slide-container">
@@ -105,37 +109,57 @@
 function HSL01_init_getWorkItems() {
     let items = [];
     // 作業項目の一覧を取得
-    let tags = document.getElementsByClassName('HSL01-slide-page02');
-    if (tags.length !== 1) {
-        alert('HSL01-slide-page02 class not found !');
+    try {
+        let tags = document.getElementsByClassName('HSL01-slide-page02');
+        if (tags.length !==1) throw 'HSL01-slide-page02 class not found !';
+        tags = tags.item(0).getElementsByTagName('ul');
+        if (tags.length !==1) throw 'list tag not found !';
+        tags = tags.item(0).getElementsByTagName('li');
+        if (tags.length === 0) throw '作業項目が未設定です.';
+        for (var liTag of tags) {
+            items.push(liTag.textContent);
+        }
+    } catch (ex) {
+        alert(ex);
+    } finally {
         return items;
     }
-    tags = tags.item(0).getElementsByTagName('ul');
-    if (tags.length !== 1) {
-        alert('list tag not found !');
-        return items;
+}
+
+function clearTableBody(element) {
+    let tags = element.getElementsByTagName('tbody');
+    let tbody = tags.item(0);
+    const trs = tbody.getElementsByTagName('tr');
+    for (let index = trs.length-1; index >= 0; --index) {
+        tbody.deleteRow(trs[index]);
     }
-    tags = tags.item(0).getElementsByTagName('li');
-    if (tags.length < 1) {
-        alert('no list item (li tag) not found !');
-        return items;
-    }
-    //alert(tags.length);
-    for (var liTag of tags) {
-        items.push(liTag.textContent);
-    }
-    return items;
 }
 
 function HSL01_init_body() {
     //alert('HSL01_init_body function');
-    let table = document.getElementById("HSL01-body-table");
+    const table = document.getElementById("HSL01-body-table");
     if (!table) {
         alert('HSL01-body-table id not found !');
         return;
     }
+    clearTableBody(table);
     let workItemList = HSL01_init_getWorkItems();
-    alert(workItemList);
+    if (workItemList.length < 1) return;
+    //alert(workItemList);
+    let no = 1;
+    for (const item of workItemList) {
+        // tbody要素にtr要素（行）を最後に追加
+        var trElem = table.tBodies[0].insertRow(-1);
+        var cellIndex = 0;
+        // td要素(No)を追加
+        var cellElem = trElem.insertCell(cellIndex++);
+        // td要素(No)にテキストを追加
+        cellElem.appendChild(document.createTextNode(no++));
+        // td要素(作業名)を追加
+        var cellElem = trElem.insertCell(cellIndex++);
+        // td要素(作業名)にテキストを追加
+        cellElem.appendChild(document.createTextNode(item));
+    }
 }
 
 function HSL01_show_slide_body() {
