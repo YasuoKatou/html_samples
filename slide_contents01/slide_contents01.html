@@ -98,14 +98,88 @@
 </ul>
                         </div>
                     </div>
+                    <div class="HSL01-slide-page-body">
+                        <div class="HSL01-slide-page03 HSL01-slide-page-hidden">
+<h3>カレンダー設定</h3>
+<div>
+    <label for="start-date">開始日付：</label>
+    <input type="date" id="start-date" name="start-date"/>
+</div>
+<div>
+    <input type="checkbox" id="start-first-date" name="start-first-date" checked/>
+    <label for="start-first-date">月初日から表示</label>
+</div>
+<div>
+    <label for="date-period">期間：</label>
+    <select id="date-period" name="date-period">
+        <option value="1" selected>１ヶ月</option>
+        <option value="2">２ヶ月</option>
+        <option value="3">３ヶ月</option>
+    </select>
+</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="HSL01-slide-tag">
                     <img src="icon001_person_team.png" class="HSL01-slide-page01-tag" alt="メンバー">
                     <img src="icon002_items.png" class="HSL01-slide-page02-tag" alt="作業項目">
+                    <img src="icon006_calendar.png" class="HSL01-slide-page03-tag" alt="カレンダー">
                 </div>
             </div>
         </div>
         <script>
+/**
+ * カレンダークラス
+ */
+class HSL01_Calender {
+    /**
+     * 指定日付の月末日を取得する.
+     */
+    getLastDate(thisDate) {
+        return new Date(thisDate.getFullYear(), thisDate.getMonth() + 1, 0);
+    }
+    makeDayList(today, isStart1stDay) {
+        const lastDate = this.getLastDate(today);      // 月末の日付
+        const firstDate = isStart1stDay ? 1 : today.getDate();
+        let dayWork = new Date(today.getFullYear(), today.getMonth(), firstDate);
+        const dayList = [];
+        while (dayWork <= lastDate) {
+            dayList.push(new Date(dayWork.getTime()));
+            dayWork.setDate(dayWork.getDate() + 1);
+        }
+        return dayList;
+    }
+    /**
+     * カレンダー情報を作成する.
+     * 2022
+     *      11  1 - 30
+     *      12  1 - 31
+     * 2023
+     *      1   1 - 31
+     *      2   1 - 28
+     */
+    getCalenderList(fromDate, isStart1stDay, numberOfMonth) {
+        const calender = [];
+        let monthList = null;
+        let flag = isStart1stDay;
+        let now = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
+        for (let monthCount = 0; monthCount < numberOfMonth; ++monthCount) {
+            if (!monthList) monthList = [];
+            monthList.push(this.makeDayList(now, flag));
+            var nextMonth = fromDate.getMonth() + 1;
+            if (nextMonth < 12) {
+                now = new Date(now.getFullYear(), nextMonth, 1);
+            } else {
+                calender.push(monthList);
+                now = new Date(now.getFullYear() + 1, 1, 1);
+            }
+            flag = false;
+        }
+        if (monthList && !calender.includes(monthList)) calender.push(monthList);
+        return calender;
+    }
+}
+
 function HSL01_init_getWorkItems() {
     let items = [];
     // 作業項目の一覧を取得
@@ -135,9 +209,38 @@ function clearTableBody(element) {
     }
 }
 
+function HSL01_init_calender() {
+    let tag = document.getElementById('start-date');
+    if (!tag) {
+        alert('start-date input tag not found !');
+        return;
+    }
+    const today = new Date();
+    tag.valueAsDate = today;
+
+    tag = document.getElementById('start-first-date');
+    if (!tag) {
+        alert('start-first-date input tag not found !');
+        return;
+    }
+    const start1stDate = tag.checked;
+
+    tag = document.getElementById('date-period');
+    if (!tag) {
+        alert('date-period input tag not found !');
+        return;
+    }
+    const numberOfMonth = tag.options[tag.selectedIndex].value;
+
+    const calender = new HSL01_Calender();
+    const calenderData = calender.getCalenderList(today, start1stDate, numberOfMonth);
+    console.log(calenderData);
+}
+
 function HSL01_init_body() {
-    //alert('HSL01_init_body function');
-    const table = document.getElementById("HSL01-body-table");
+    HSL01_init_calender();
+
+    const table = document.getElementById('HSL01-body-table');
     if (!table) {
         alert('HSL01-body-table id not found !');
         return;
@@ -246,6 +349,8 @@ function HSL01_clickEvent(event) {
         slidePage = 'HSL01-slide-page01';
     } else if (target.classList.contains('HSL01-slide-page02-tag')) {
         slidePage = 'HSL01-slide-page02';
+    } else if (target.classList.contains('HSL01-slide-page03-tag')) {
+        slidePage = 'HSL01-slide-page03';
     }
     if (slidePage) {
         if (HSL01_is_page_actice(target)) {

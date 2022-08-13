@@ -40,9 +40,11 @@ form {
          + var(--HSL01-WOKER-LABEL-WIDTH)
          + var(--HSL01-NICKNAME-LABEL-WIDTH));
     --HSL01-slide-page02-width: var(--HSL01-slide-page01-width);
-    --HSL01-slide-body-width: max(var(--HSL01-slide-page01-width), var(--HSL01-slide-page02-width));
+    --HSL01-slide-page03-width: var(--HSL01-slide-page01-width);
+    --HSL01-slide-body-width: max(var(--HSL01-slide-page01-width), var(--HSL01-slide-page02-width), var(--HSL01-slide-page03-width));
     --HSL01-slide-page01-bg-color: aqua;
     --HSL01-slide-page02-bg-color: bisque;
+    --HSL01-slide-page03-bg-color: LightYellow;
     --HSL01-slide--animation-time: 1s;
 }
 
@@ -162,6 +164,12 @@ form {
     list-style: none;
 }
 
+.HSL01-slide-page03 {
+    background-color: var(--HSL01-slide-page03-bg-color);
+    width: var(--HSL01-slide-page03-width);
+    height:100%;
+}
+
 .HSL01-slide-tag {
     width: var(--HSL01-slider-tag-size);
     height: 100%;
@@ -174,12 +182,24 @@ form {
     height: var(--HSL01-slider-tag-size);
 }
 
+.HSL01-slide-tag > img:first-child {
+    margin-bottom: 5px;
+}
+
+.HSL01-slide-tag > img:not(:first-child) {
+    margin: 5px 0;
+}
+
 .HSL01-slide-page01-tag-active {
     background-color: var(--HSL01-slide-page01-bg-color);
 }
 
 .HSL01-slide-page02-tag-active {
     background-color: var(--HSL01-slide-page02-bg-color);
+}
+
+.HSL01-slide-page03-tag-active {
+    background-color: var(--HSL01-slide-page03-bg-color);
 }
 
 .HSL01-slide-page01-slidein {
@@ -208,6 +228,23 @@ form {
     animation-direction: reverse;
 }
 @keyframes HSL01-slide-page02-slidein-animation {
+    0% {
+        left: calc(var(--HSL01-slide-body-width) * -1);
+    }
+    100% {
+        left: calc(calc(var(--HSL01-slide-body-width) - var(--HSL01-slide-page02-width)) * -1);
+    }
+}
+
+.HSL01-slide-page03-slidein {
+    animation: HSL01-slide-page03-slidein-animation var(--HSL01-slide--animation-time) both;
+    animation-direction: normal;
+}
+.HSL01-slide-page03-slideout {
+    animation: HSL01-slide-page03-slidein-animation var(--HSL01-slide--animation-time) both;
+    animation-direction: reverse;
+}
+@keyframes HSL01-slide-page03-slidein-animation {
     0% {
         left: calc(var(--HSL01-slide-body-width) * -1);
     }
