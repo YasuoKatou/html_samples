@@ -46,6 +46,17 @@ form {
     --HSL01-slide-page02-bg-color: bisque;
     --HSL01-slide-page03-bg-color: LightYellow;
     --HSL01-slide--animation-time: 1s;
+
+    --HSL01-TABLE-COLUMN-WIDTH-NO: 3rem;
+    --HSL01-TABLE-COLUMN-WIDTH-TITLE: 10rem;
+    --HSL01-TABLE-COLUMN-WIDTH-HANDLER: 5rem;
+    --HSL01-TABLE-COLUMN-WIDTH-COST: 2rem;
+    --HSL01-TABLE-COLUMN-WIDTH: calc(
+          var(--HSL01-TABLE-COLUMN-WIDTH-NO)
+        + var(--HSL01-TABLE-COLUMN-WIDTH-TITLE)
+        + var(--HSL01-TABLE-COLUMN-WIDTH-HANDLER)
+        + var(--HSL01-TABLE-COLUMN-WIDTH-COST));
+    --HSL01-TABLE-COLUMN-WIDTH-DATE: 1.5rem;
 }
 
 .HSL01-container {
@@ -64,12 +75,71 @@ form {
     overflow: auto;
 }
 
+.HSL01-body-table {
+    display: flex;
+}
+
+.HSL01-body-table li {
+    list-style: none;
+}
+
+.HSL01-body-table > li:nth-child(1) {
+    box-sizing: border-box;
+    flex-basis: var(--HSL01-TABLE-COLUMN-WIDTH);
+}
+
+.HSL01-body-table > li:nth-child(1) > ul {
+    display: flex;
+}
+
+.HSL01-body-table > li:nth-child(2) {
+    box-sizing: border-box;
+    flex-basis: auto;
+}
+
+.HSL01-body-table > li:nth-child(2) > ul {
+    display: flex;
+}
+
+.HSL01-body-table-header-title > li:nth-child(1),
+.HSL01-body-table-body > li > ul > li:nth-child(1) {
+    width: var(--HSL01-TABLE-COLUMN-WIDTH-NO);
+}
+
+.HSL01-body-table-header-title > li:nth-child(2),
+.HSL01-body-table-body > li > ul > li:nth-child(2) {
+    width: var(--HSL01-TABLE-COLUMN-WIDTH-TITLE);
+}
+
+.HSL01-body-table-header-title > li:nth-child(3),
+.HSL01-body-table-body > li > ul > li:nth-child(3) {
+    width: var(--HSL01-TABLE-COLUMN-WIDTH-HANDLER);
+}
+
+.HSL01-body-table-header-title > li:nth-child(4),
+.HSL01-body-table-body > li > ul > li:nth-child(4) {
+    width: var(--HSL01-TABLE-COLUMN-WIDTH-COST);
+}
+
+.HSL01-body-table-body > li > ul > li:nth-child(4) {
+    text-align: right;
+}
+
+.HSL01-body-table-header-date > li {
+    width: var(--HSL01-TABLE-COLUMN-WIDTH-DATE);
+}
+
+.HSL01-body-table-header p {
+    text-align: center;
+    font-weight: bold;
+}
+
 .HSL01-calender-sun {
     color: red;
     font-weight: normal;
 }
 
-.HSL01-calender-sta {
+.HSL01-calender-sat {
     color: blue;
     font-weight: normal;
 }

@@ -10,60 +10,81 @@
         </section>
         <div class="HSL01-container">
             <div class="HSL01-body">
-<table id="HSL01-body-table">
-    <thead>
-        <tr>
-            <th>No</th>
-            <th>作業名</th>
-            <th>担当</th>
-            <th>工数</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td>要件定義</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>外部設計</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td>製造・単体テスト</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>4-1</td>
-            <td>クライアント</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>4-1-1</td>
-            <td>ログイン画面</td>
-            <td>TKC-A</td>
-            <td>24</td>
-        </tr>
-        <tr>
-            <td>4-2</td>
-            <td>サーバ</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>4-2-1</td>
-            <td>グイン処理</td>
-            <td>IWA-A</td>
-            <td>16</td>
-        </tr>
-    </tbody>
-</table>
+<ul class="HSL01-body-table HSL01-body-table-header">
+    <li>
+        <ul class="HSL01-body-table-header-title">
+            <li><p>No</p></li>
+            <li><p>作業名</p></li>
+            <li><p>担当</p></li>
+            <li><p>工数</p></li>
+        </ul>
+    </li>
+    <li>
+        <ul class="HSL01-body-table-header-date">
+            <li><p>1</p></li>
+            <li><p>2</p></li>
+            <li><p>3</p></li>
+            <li><p>4</p></li>
+            <li><p>5</p></li>
+            <li><p>6</p></li>
+            <li><p>7</p></li>
+            <li><p>8</p></li>
+            <li><p>9</p></li>
+            <li><p>10</p></li>
+        </ul>
+    </li>
+</ul>
+<ul class="HSL01-body-table HSL01-body-table-body">
+    <li class="HSL01-body-table-body-contents">
+        <ul>
+            <li><p>1</p></li>
+            <li><p>要件定義</p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+        </ul>
+        <ul>
+            <li><p>2</p></li>
+            <li><p>外部設計</p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+        </ul>
+        <ul>
+            <li><p>4</p></li>
+            <li><p>製造・単体テスト</p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+        </ul>
+        <ul>
+            <li><p>4-1</p></li>
+            <li><p>クライアント</p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+        </ul>
+        <ul>
+            <li><p>4-1-1</p></li>
+            <li><p>ログイン画面</p></li>
+            <li><p>TKC-A</p></li>
+            <li><p>24</p></li>
+        </ul>
+        <ul>
+            <li><p>4-2</p></li>
+            <li><p>サーバ</p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+        </ul>
+        <ul>
+            <li><p>4-1-1</p></li>
+            <li><p>ログイン処理</p></li>
+            <li><p>IWA-A</p></li>
+            <li><p>16</p></li>
+        </ul>
+    </li>
+    <li class="HSL01-body-table-body-contents">
+        <ul class="HSL01-body-table-body-date">
+
+        </ul>
+    </li>
+</ul>
             </div>
             <div class="HSL01-slide-container">
                 <div class="HSL01-slide-body">
@@ -201,11 +222,19 @@ function HSL01_init_getWorkItems() {
 }
 
 function clearTableBody(element) {
-    let tags = element.getElementsByTagName('tbody');
-    let tbody = tags.item(0);
-    const trs = tbody.getElementsByTagName('tr');
-    for (let index = trs.length-1; index >= 0; --index) {
-        tbody.deleteRow(trs[index]);
+    try {
+        let tags = document.getElementsByClassName('HSL01-body-table-body');
+        if (tags.length !== 1) throw 'not selected body !'
+        tags = tags.item(0).getElementsByClassName('HSL01-body-table-body-contents')
+        if (tags.length !== 2) throw 'not selected title and date in body !'
+        for (let index = 0; index < tags.length; ++index) {
+            let tbody = tags.item(index);
+            while (tbody.firstChild) {
+                tbody.removeChild(tbody.firstChild);
+            }
+        }
+    } catch (ex) {
+        alert(ex);
     }
 }
 
@@ -226,7 +255,7 @@ function HSL01_init_calender() {
 
         const calender = new HSL01_Calender();
         const calenderData = calender.getCalenderList(today, start1stDate, numberOfMonth);
-        console.log(calenderData);
+        //console.log(calenderData);
         return calenderData;
     } catch (ex) {
         alert(ex);
@@ -234,64 +263,78 @@ function HSL01_init_calender() {
     }
 }
 
-function HSL01_init_calender_header(table, calenderData) {
+function HSL01_init_calender_header(calenderData) {
     try {
-        let tag = table.tHead;
-        if (!tag) throw 'no table header !';
-        const trs = table.tHead.getElementsByTagName('tr');
-        if (trs.length !== 1) throw 'table header not selected records !';
-        const threc = trs[0];
-        for (let index = threc.cells.length-1; index >= 4; --index) {
-            threc.deleteCell(index);
+        let tags = document.getElementsByClassName('HSL01-body-table-header-date');
+        if (tags.length !== 1) throw 'not selected calender header !';
+        const headerCalender = tags.item(0);
+        while (headerCalender.firstChild) {
+            headerCalender.removeChild(headerCalender.firstChild);
         }
         for (let monthList of calenderData) {
             for (let month of monthList) {
                 for (let date of month) {
-                    let cellElem = document.createElement('th');
+                    let p = document.createElement('p');
+                    p.appendChild(document.createTextNode(date.getDate()));
+                    let li = document.createElement('li');
+                    li.appendChild(p);
                     let dayOfWeek = date.getDay();
                     if (dayOfWeek === 0) {
-                        cellElem.classList.add('HSL01-calender-sun');
+                        p.classList.add('HSL01-calender-sun');
                     } else if (dayOfWeek === 6) {
-                        cellElem.classList.add('HSL01-calender-sta');
+                        p.classList.add('HSL01-calender-sat');
                     }
-                    cellElem.appendChild(document.createTextNode(date.getDate()));
-                    threc.appendChild(cellElem);
+                    headerCalender.appendChild(li);
                 }
             }
         }
-        
+    } catch (ex) {
+        alert(ex);
+    }
+}
+
+function HSL01_table_contents_title(data) {
+    let p = document.createElement('p');
+    p.appendChild(document.createTextNode(data));
+    let li = document.createElement('li');
+    li.appendChild(p);
+    return li;
+}
+
+function HSL01_init_table_contents() {
+    try {
+        let tags = document.getElementsByClassName('HSL01-body-table-body');
+        if (tags.length !== 1) throw 'not selected body !'
+        tags = tags.item(0).getElementsByClassName('HSL01-body-table-body-contents')
+        if (tags.length !== 2) throw 'not selected title and date in body !'
+        let title = tags.item(0);
+        let workItemList = HSL01_init_getWorkItems();
+        if (workItemList.length < 1) return;
+        // console.log(workItemList);
+        let no = 1;
+        for (const item of workItemList) {
+            let ul = document.createElement('ul');
+
+            ul.appendChild(HSL01_table_contents_title(no++));
+            ul.appendChild(HSL01_table_contents_title(item));
+            ul.appendChild(HSL01_table_contents_title(''));
+            ul.appendChild(HSL01_table_contents_title(''));
+
+            title.appendChild(ul);
+        }
+
+        let date = tags.item(0);
+        // TODO
     } catch (ex) {
         alert(ex);
     }
 }
 
 function HSL01_init_body() {
+    clearTableBody();
+    HSL01_init_table_contents();
     const calenderData = HSL01_init_calender();
-
-    const table = document.getElementById('HSL01-body-table');
-    if (!table) {
-        alert('HSL01-body-table id not found !');
-        return;
-    }
-    clearTableBody(table);
-    HSL01_init_calender_header(table, calenderData);
-    let workItemList = HSL01_init_getWorkItems();
-    if (workItemList.length < 1) return;
-    //alert(workItemList);
-    let no = 1;
-    for (const item of workItemList) {
-        // tbody要素にtr要素（行）を最後に追加
-        var trElem = table.tBodies[0].insertRow(-1);
-        var cellIndex = 0;
-        // td要素(No)を追加
-        var cellElem = trElem.insertCell(cellIndex++);
-        // td要素(No)にテキストを追加
-        cellElem.appendChild(document.createTextNode(no++));
-        // td要素(作業名)を追加
-        var cellElem = trElem.insertCell(cellIndex++);
-        // td要素(作業名)にテキストを追加
-        cellElem.appendChild(document.createTextNode(item));
-    }
+    HSL01_init_calender_header(calenderData);
 }
 
 function HSL01_show_slide_body() {
@@ -397,7 +440,7 @@ function HSL01_clickEvent(event) {
     }
 }
 window.addEventListener('load', (event) => {
-    console.log('start content slider sample');
+    //console.log('start content slider sample');
     HSL01_init_body();
     document.addEventListener('click', HSL01_clickEvent);
 });
