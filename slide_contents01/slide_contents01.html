@@ -17,7 +17,7 @@
             <th>作業名</th>
             <th>担当</th>
             <th>工数</th>
-        </tr>    
+        </tr>
     </thead>
     <tbody>
         <tr>
@@ -61,7 +61,7 @@
             <td>グイン処理</td>
             <td>IWA-A</td>
             <td>16</td>
-        </tr>    
+        </tr>
     </tbody>
 </table>
             </div>
@@ -210,35 +210,63 @@ function clearTableBody(element) {
 }
 
 function HSL01_init_calender() {
-    let tag = document.getElementById('start-date');
-    if (!tag) {
-        alert('start-date input tag not found !');
-        return;
-    }
-    const today = new Date();
-    tag.valueAsDate = today;
+    try {
+        let tag = document.getElementById('start-date');
+        if (!tag) throw 'start-date input tag not found !';
+        const today = new Date();
+        tag.valueAsDate = today;
 
-    tag = document.getElementById('start-first-date');
-    if (!tag) {
-        alert('start-first-date input tag not found !');
-        return;
-    }
-    const start1stDate = tag.checked;
+        tag = document.getElementById('start-first-date');
+        if (!tag) throw 'start-first-date input tag not found !';
+        const start1stDate = tag.checked;
 
-    tag = document.getElementById('date-period');
-    if (!tag) {
-        alert('date-period input tag not found !');
-        return;
-    }
-    const numberOfMonth = tag.options[tag.selectedIndex].value;
+        tag = document.getElementById('date-period');
+        if (!tag) throw 'date-period input tag not found !';
+        const numberOfMonth = tag.options[tag.selectedIndex].value;
 
-    const calender = new HSL01_Calender();
-    const calenderData = calender.getCalenderList(today, start1stDate, numberOfMonth);
-    console.log(calenderData);
+        const calender = new HSL01_Calender();
+        const calenderData = calender.getCalenderList(today, start1stDate, numberOfMonth);
+        console.log(calenderData);
+        return calenderData;
+    } catch (ex) {
+        alert(ex);
+        return [];
+    }
+}
+
+function HSL01_init_calender_header(table, calenderData) {
+    try {
+        let tag = table.tHead;
+        if (!tag) throw 'no table header !';
+        const trs = table.tHead.getElementsByTagName('tr');
+        if (trs.length !== 1) throw 'table header not selected records !';
+        const threc = trs[0];
+        for (let index = threc.cells.length-1; index >= 4; --index) {
+            threc.deleteCell(index);
+        }
+        for (let monthList of calenderData) {
+            for (let month of monthList) {
+                for (let date of month) {
+                    let cellElem = document.createElement('th');
+                    let dayOfWeek = date.getDay();
+                    if (dayOfWeek === 0) {
+                        cellElem.classList.add('HSL01-calender-sun');
+                    } else if (dayOfWeek === 6) {
+                        cellElem.classList.add('HSL01-calender-sta');
+                    }
+                    cellElem.appendChild(document.createTextNode(date.getDate()));
+                    threc.appendChild(cellElem);
+                }
+            }
+        }
+        
+    } catch (ex) {
+        alert(ex);
+    }
 }
 
 function HSL01_init_body() {
-    HSL01_init_calender();
+    const calenderData = HSL01_init_calender();
 
     const table = document.getElementById('HSL01-body-table');
     if (!table) {
@@ -246,6 +274,7 @@ function HSL01_init_body() {
         return;
     }
     clearTableBody(table);
+    HSL01_init_calender_header(table, calenderData);
     let workItemList = HSL01_init_getWorkItems();
     if (workItemList.length < 1) return;
     //alert(workItemList);

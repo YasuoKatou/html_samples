@@ -61,6 +61,17 @@ form {
     background-color: aliceblue;
     height: 100%;
     width: calc(100% - var(--HSL01-slider-tag-size));
+    overflow: auto;
+}
+
+.HSL01-calender-sun {
+    color: red;
+    font-weight: normal;
+}
+
+.HSL01-calender-sta {
+    color: blue;
+    font-weight: normal;
 }
 
 .HSL01-slide-container {
