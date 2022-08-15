@@ -26,6 +26,6 @@ html {
 }
 
 .main > p {
-    min-width: 2rem;    /*widthでは、幅が一定にならない*/
+    min-width: 2rem;    /* widthでは、幅が一定にならない*/
     text-align: center;
 }
