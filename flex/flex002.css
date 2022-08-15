@@ -1,0 +1,31 @@
+
+*{ margin:0; padding:0;}
+
+html {
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+}
+
+.side {
+    width: 200px;
+    background-color: rgba(245, 178, 177, 0.5);
+}
+  
+.main {
+    overflow-x: auto;
+    background-color: rgba(255, 253, 237, 1);
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+}
+
+.main > p {
+    min-width: 2rem;    /*widthでは、幅が一定にならない*/
+    text-align: center;
+}
