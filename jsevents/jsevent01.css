@@ -1,0 +1,80 @@
+
+*{ margin:0; padding:0;}
+
+html {
+    height: 100%;
+}
+
+body {
+    margin: 10px;
+    height: calc(100vh - 20px);
+/*
+    display: flex;
+    flex-direction: column;
+*/
+    font-size: 14px;
+}
+
+.header > h1 {
+    box-sizing: border-box;
+    height: 2.5rem;
+    text-align: center;
+    color: #364e96;
+    border: solid 2px #364e96;
+    padding-top: 0.2em;
+    border-radius: 5px;
+}
+
+.page-root {
+    width: 100%;
+    height: calc(100% - 2.5rem);    /* ヘッダの高さを引く */
+/*
+    display: flex;
+    flex-direction: column;
+*/
+}
+
+#operation-aera {
+    width: 100%;
+    min-height: 200px;
+    max-height: 200px;
+    background-color: antiquewhite;
+}
+
+.log-container {
+    margin-top: 10px;
+    height: calc(100% - 200px - 10px);  /* マウス操作エリアと上部隙間を引く */
+    /*flex: 1;*/
+    display: flex;
+    flex-direction: row;
+}
+
+.event-indicate {
+    margin: 0 10px;
+    background-color: azure;
+}
+
+.event-indicate > div:last-child {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.xy-label {
+    display: inline-block;
+    width: 3rem;
+    text-align: right;
+}
+
+.xy-position {
+    display: inline-block;
+    width: 3rem;
+    text-align: right;
+    padding-right: 5px;
+}
+
+#log-list {
+    flex: 1;
+    height: 100%;
+    overflow: auto;
+    background-color: lemonchiffon
+}

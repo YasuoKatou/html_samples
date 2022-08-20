@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="jsevent01.css">
+    </head>
+    <body>
+        <section class="header">
+            <h1>Javascript マウスイベントサンプル</h1>
+        </section>
+        <div class="page-root">
+            <div id="operation-aera">
+                ここでマウス操作します。
+            </div>
+            <div class="log-container">
+                <div class="event-indicate">
+                    <div>
+                        <input type="radio" id="mouse-up-down">
+                        <label for="mouse-up-down">mouse up/down</label>
+                    </div>
+                    <div>
+                        <span class="xy-label">offsetX</span><span id="offset-x" class="xy-position">-</span>
+                        <span class="xy-label">offsetY</span><span id="offset-y" class="xy-position">-</span>
+                    </div>
+                    <div>
+                        <span class="xy-label">clientX</span><span id="client-x" class="xy-position">-</span>
+                        <span class="xy-label">clientY</span><span id="client-y" class="xy-position">-</span>
+                    </div>
+                    <div>
+                        <span class="xy-label">offsetX</span><span id="screen-x" class="xy-position">-</span>
+                        <span class="xy-label">offsetY</span><span id="screen-y" class="xy-position">-</span>
+                    </div>
+                    <div>
+                        <input type="radio" id="touch-start-end">
+                        <label for="touch-start-end">touch-start/end</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="touch-move">
+                        <label for="touch-move">touch move</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="touch-cancel">
+                        <label for="touch-cancel">touch cancel</label>
+                    </div>
+    
+    
+                    <div>
+                        <input type="button" id="clear-button" value="クリア">
+                    </div>
+                </div>
+                <div id="log-list">
+    
+                </div>    
+            </div>    
+        </div>
+        <script>
+class MyEvent {
+    _inDrag = false;
+    _cbxMouseUpDown = null;
+    _cbxTouchStartEnd = null;
+    _lblOffsetX = null;
+    _lblOffsetY = null;
+    _lblClientX = null;
+    _lblClientY = null;
+    _lblScreenX = null;
+    _lblScreenY = null;
+    _logList = null;
+    constructor() {
+        this._cbxMouseUpDown = document.getElementById('mouse-up-down');
+        this._cbxTouchStartEnd = document.getElementById('touch-start-end');
+        this._lblOffsetX = document.getElementById('offset-x');
+        this._lblOffsetY = document.getElementById('offset-y');
+        this._lblClientX = document.getElementById('client-x');
+        this._lblClientY = document.getElementById('client-y');
+        this._lblScreenX = document.getElementById('screen-x');
+        this._lblScreenY = document.getElementById('screen-y');
+        this._logList = document.getElementById('log-list');
+    }
+    _getDateTime() {
+        const dt = new Date();
+        //console.log(dt);
+        // return (dt.getMonth() + 1) + "/" + dt.getDate() + " " +
+        //     ('0' + dt.getHours()).slice(-2) + ":" +
+        //     ('0' + dt.getMinutes()).slice(-2) + ":" +
+        //     ('0' + dt.getSeconds()).slice(-2) + "." +
+        //     ('00' + dt.getMilliseconds()).slice(-3);
+        return ('0' + dt.getHours()).slice(-2) + ":" +
+            ('0' + dt.getMinutes()).slice(-2) + ":" +
+            ('0' + dt.getSeconds()).slice(-2) + "." +
+            ('00' + dt.getMilliseconds()).slice(-3);
+    }
+    _log(dt, msg) {
+        let p = document.createElement('p');
+        p.appendChild(document.createTextNode(dt + " " + msg));
+        this._logList.appendChild(p);
+    }
+    clearLog() {
+        while (this._logList.firstChild) {
+            this._logList.removeChild(this._logList.firstChild);
+        }
+    }
+    mouseButtonDown(event) {
+        const logTime = this._getDateTime();
+        this._inDrag = true;
+        this._cbxMouseUpDown.checked = true;
+        this._log(logTime, 'mouse down');
+    }
+    mouseButtonUp(event) {
+        const logTime = this._getDateTime();
+        this._inDrag = false;
+        this._cbxMouseUpDown.checked = false;
+        this._log(logTime, 'mouse up');
+    }
+    mouseMove(event) {
+        this._lblOffsetX.textContent = event.offsetX;
+        this._lblOffsetY.textContent = event.offsetY;
+        this._lblClientX.textContent = event.clientX;
+        this._lblClientY.textContent = event.clientY;
+        this._lblScreenX.textContent = event.screenX;
+        this._lblScreenY.textContent = event.screenY;
+    }
+    touchStart(event) {
+        const logTime = this._getDateTime();
+        this._cbxTouchStartEnd.checked = true;
+        this._log(logTime, 'touch start');
+    }
+    touchEnd(event) {
+        const logTime = this._getDateTime();
+        this._cbxTouchStartEnd.checked = false;
+        this._log(logTime, 'touch end');
+    }
+}
+window.addEventListener('load', (event) => {
+    const eventClass = new MyEvent();
+    let ope = document.getElementById('operation-aera');
+    if (!ope) {
+        alert('operation-aera tag id not found !');
+        return;
+    }
+    ope.addEventListener('mousedown', event => {
+        eventClass.mouseButtonDown(event);
+    });
+    ope.addEventListener('mouseup', event => {
+        eventClass.mouseButtonUp(event);
+    });
+    ope.addEventListener('mousemove', event => {
+        eventClass.mouseMove(event);
+    });
+    ope.addEventListener('touchstart', event => {
+        eventClass.touchStart(event);
+    });
+    ope.addEventListener('touchend', event => {
+        eventClass.touchEnd(event);
+    });
+
+    ope = document.getElementById('clear-button');
+    if (!ope) {
+        alert('clear-button tag id not found !');
+        return;
+    }
+    ope.addEventListener('click', event => {
+        eventClass.clearLog();
+    });
+});
+        </script>
+    </body>
+</html>
