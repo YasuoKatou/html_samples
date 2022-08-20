@@ -18,18 +18,18 @@
                         <input type="radio" id="mouse-up-down">
                         <label for="mouse-up-down">mouse up/down</label>
                     </div>
-                    <div>
+                    <!--div>
                         <span class="xy-label">offsetX</span><span id="offset-x" class="xy-position">-</span>
                         <span class="xy-label">offsetY</span><span id="offset-y" class="xy-position">-</span>
-                    </div>
+                    </div-->
                     <div>
                         <span class="xy-label">clientX</span><span id="client-x" class="xy-position">-</span>
                         <span class="xy-label">clientY</span><span id="client-y" class="xy-position">-</span>
                     </div>
-                    <div>
+                    <!--div>
                         <span class="xy-label">offsetX</span><span id="screen-x" class="xy-position">-</span>
                         <span class="xy-label">offsetY</span><span id="screen-y" class="xy-position">-</span>
-                    </div>
+                    </div-->
                     <div>
                         <input type="radio" id="touch-start-end">
                         <label for="touch-start-end">touch-start/end</label>
@@ -68,12 +68,12 @@ class MyEvent {
     constructor() {
         this._cbxMouseUpDown = document.getElementById('mouse-up-down');
         this._cbxTouchStartEnd = document.getElementById('touch-start-end');
-        this._lblOffsetX = document.getElementById('offset-x');
-        this._lblOffsetY = document.getElementById('offset-y');
+        //this._lblOffsetX = document.getElementById('offset-x');
+        //this._lblOffsetY = document.getElementById('offset-y');
         this._lblClientX = document.getElementById('client-x');
         this._lblClientY = document.getElementById('client-y');
-        this._lblScreenX = document.getElementById('screen-x');
-        this._lblScreenY = document.getElementById('screen-y');
+        //this._lblScreenX = document.getElementById('screen-x');
+        //this._lblScreenY = document.getElementById('screen-y');
         this._logList = document.getElementById('log-list');
     }
     _getDateTime() {
@@ -112,12 +112,12 @@ class MyEvent {
         this._log(logTime, 'mouse up');
     }
     mouseMove(event) {
-        this._lblOffsetX.textContent = event.offsetX;
-        this._lblOffsetY.textContent = event.offsetY;
+        //this._lblOffsetX.textContent = event.offsetX;
+        //this._lblOffsetY.textContent = event.offsetY;
         this._lblClientX.textContent = event.clientX;
         this._lblClientY.textContent = event.clientY;
-        this._lblScreenX.textContent = event.screenX;
-        this._lblScreenY.textContent = event.screenY;
+        //this._lblScreenX.textContent = event.screenX;
+        //this._lblScreenY.textContent = event.screenY;
     }
     touchStart(event) {
         const logTime = this._getDateTime();
@@ -129,6 +129,12 @@ class MyEvent {
         this._cbxTouchStartEnd.checked = false;
         this._log(logTime, 'touch end');
     }
+    touchMove(event) {
+        if (event.touches && event.touches[0]) {
+            this._lblClientX.textContent = Math.trunc(event.touches[0].clientX);
+            this._lblClientY.textContent = Math.trunc(event.touches[0].clientY);
+        }
+    }
 }
 window.addEventListener('load', (event) => {
     const eventClass = new MyEvent();
@@ -137,21 +143,28 @@ window.addEventListener('load', (event) => {
         alert('operation-aera tag id not found !');
         return;
     }
-    ope.addEventListener('mousedown', event => {
-        eventClass.mouseButtonDown(event);
-    });
-    ope.addEventListener('mouseup', event => {
-        eventClass.mouseButtonUp(event);
-    });
-    ope.addEventListener('mousemove', event => {
-        eventClass.mouseMove(event);
-    });
-    ope.addEventListener('touchstart', event => {
-        eventClass.touchStart(event);
-    });
-    ope.addEventListener('touchend', event => {
-        eventClass.touchEnd(event);
-    });
+    if (typeof window.ontouchstart === "undefined") {
+        // for PC
+        ope.addEventListener('mousedown', event => {
+            eventClass.mouseButtonDown(event);
+        });
+        ope.addEventListener('mouseup', event => {
+            eventClass.mouseButtonUp(event);
+        });
+        ope.addEventListener('mousemove', event => {
+            eventClass.mouseMove(event);
+        });
+    } else {
+        ope.addEventListener('touchstart', event => {
+            eventClass.touchStart(event);
+        });
+        ope.addEventListener('touchend', event => {
+            eventClass.touchEnd(event);
+        });
+        ope.addEventListener('touchmove', event => {
+            eventClass.touchMove(event);
+        });
+    }
 
     ope = document.getElementById('clear-button');
     if (!ope) {
