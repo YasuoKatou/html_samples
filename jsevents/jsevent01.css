@@ -38,8 +38,31 @@ body {
     width: 100%;
     min-height: 200px;
     max-height: 200px;
+    overflow: hidden;
     background-color: antiquewhite;
 }
+
+#operation-aera > div {
+    width: 200%;
+    min-height: 400px;
+    position: relative;
+    left: 0;
+    top: 0;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.box {
+    text-align: center;
+    width: 50%;
+    height: 200px;
+}
+.box1 { background-color: red; }
+.box2 { background-color: orange; }
+.box3 { background-color: purple; }
+.box4 { background-color: grey; }
 
 .log-container {
     margin-top: 10px;
