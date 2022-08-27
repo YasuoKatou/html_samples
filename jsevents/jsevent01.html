@@ -125,15 +125,22 @@ class MyEvent {
         const logTime = this._getDateTime();
         this._cbxTouchStartEnd.checked = true;
         this._log(logTime, 'touch start');
+        if (event.touches && event.touches[0]) {
+            this._prevPos = {x: Math.trunc(event.touches[0].clientX),
+                             y: Math.trunc(event.touches[0].clientY)};
+        }
     }
     touchEnd(event) {
         const logTime = this._getDateTime();
         this._cbxTouchStartEnd.checked = false;
+        this._prevPos = null;
         this._log(logTime, 'touch end');
     }
     touchMove(event) {
         if (event.touches && event.touches[0]) {
-            this._moveTag(Math.trunc(event.touches[0].clientX), Math.trunc(event.touches[0].clientY));
+            if (this._prevPos) {
+                this._moveTag(Math.trunc(event.touches[0].clientX), Math.trunc(event.touches[0].clientY));
+            }
         }
     }
 }
