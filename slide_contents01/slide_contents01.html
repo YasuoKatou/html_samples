@@ -2,12 +2,12 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="slide_contents01.css">
-        <link rel="stylesheet" href="slide_contents01_1.css">
-        <link rel="stylesheet" href="slide_contents01_1_p1.css">
-        <link rel="stylesheet" href="slide_contents01_1_p2.css">
-        <link rel="stylesheet" href="slide_contents01_1_p3.css">
-        <link rel="stylesheet" href="slide_contents01_2.css">
+        <link rel="stylesheet" href="css/slide_contents01.css">
+        <link rel="stylesheet" href="css/slide_contents01_1.css">
+        <link rel="stylesheet" href="css/slide_contents01_1_p1.css">
+        <link rel="stylesheet" href="css/slide_contents01_1_p2.css">
+        <link rel="stylesheet" href="css/slide_contents01_1_p3.css">
+        <link rel="stylesheet" href="css/slide_contents01_2.css">
     </head>
     <body>
         <section class="header">
@@ -110,7 +110,7 @@
                         <div class="HSL01-slide-page01 HSL01-slide-page-hidden">
 <h3>メンバー</h3>
 <div class="HSL01-slide-page01-add-member">
-    <img src="icon003_plus.png" alt="メンバー追加">
+    <img src="img/icon003_plus.png" alt="メンバー追加">
 </div>
 <ul>
     <li><p class="title">会社名</p><p class="title">氏名</p><p class="title">表示名</p></li>
@@ -125,15 +125,15 @@
                         <div class="HSL01-slide-page02 HSL01-slide-page-hidden">
 <h3>作業項目</h3>
 <ul>
-    <li><img src="icon004_arrow_right.png" class="HSL01-list-icon">要件定義</li>
-    <li><img src="icon004_arrow_right.png" class="HSL01-list-icon">外部設計</li>
-    <li><img src="icon004_arrow_right.png" class="HSL01-list-icon">内部設計</li>
-    <li><img src="icon004_arrow_right.png" class="HSL01-list-icon">製造・単体テスト</li>
-    <li><img src="icon004_arrow_right.png" class="HSL01-list-icon">結合テスト</li>
-    <li><img src="icon004_arrow_right.png" class="HSL01-list-icon">システムテスト</li>
-    <li><img src="icon004_arrow_right.png" class="HSL01-list-icon">運用テスト</li>
-    <li><img src="icon004_arrow_right.png" class="HSL01-list-icon">システム移行</li>
-    <li><img src="icon004_arrow_right.png" class="HSL01-list-icon">運用・保守</li>
+    <li><img src="img/icon004_arrow_right.png" class="HSL01-list-icon">要件定義</li>
+    <li><img src="img/icon004_arrow_right.png" class="HSL01-list-icon">外部設計</li>
+    <li><img src="img/icon004_arrow_right.png" class="HSL01-list-icon">内部設計</li>
+    <li><img src="img/icon004_arrow_right.png" class="HSL01-list-icon">製造・単体テスト</li>
+    <li><img src="img/icon004_arrow_right.png" class="HSL01-list-icon">結合テスト</li>
+    <li><img src="img/icon004_arrow_right.png" class="HSL01-list-icon">システムテスト</li>
+    <li><img src="img/icon004_arrow_right.png" class="HSL01-list-icon">運用テスト</li>
+    <li><img src="img/icon004_arrow_right.png" class="HSL01-list-icon">システム移行</li>
+    <li><img src="img/icon004_arrow_right.png" class="HSL01-list-icon">運用・保守</li>
 </ul>
                         </div>
                     </div>
@@ -160,12 +160,13 @@
                     </div>
                 </div>
                 <div class="HSL01-slide-tag">
-                    <img src="icon001_person_team.png" class="HSL01-slide-page01-tag" alt="メンバー">
-                    <img src="icon002_items.png" class="HSL01-slide-page02-tag" alt="作業項目">
-                    <img src="icon006_calendar.png" class="HSL01-slide-page03-tag" alt="カレンダー">
+                    <img src="img/icon001_person_team.png" class="HSL01-slide-page01-tag" alt="メンバー">
+                    <img src="img/icon002_items.png" class="HSL01-slide-page02-tag" alt="作業項目">
+                    <img src="img/icon006_calendar.png" class="HSL01-slide-page03-tag" alt="カレンダー">
                 </div>
             </div>
         </div>
+        <script type="text/javascript" src="js/HSL01_slide.js"></script>
         <script>
 /**
  * カレンダークラス
@@ -355,113 +356,15 @@ function HSL01_init_body() {
     HSL01_init_calender_header(calenderData);
 }
 
-function HSL01_show_slide_body() {
-    let els = document.getElementsByClassName('HSL01-slide-body');
-    if (els.length !== 1) {
-        console.error('no found slide body');
-        return;
-    }
-    let c = els[0];
-    c.style.display = 'block';
-}
-function HSL01_clear_active_tag() {
-    let els = document.getElementsByClassName('HSL01-slide-tag');
-    if (els.length !== 1) {
-        console.error('no found slide tag container');
-        return;
-    }
-    els = els[0].getElementsByTagName('img');
-    if (els.length === 0) {
-        console.error('no found slide tag');
-    }
-    for (let index = 0; index < els.length; ++index) {
-        let imgTag = els[index];
-        const iter = imgTag.classList.values();
-        for (let v = iter.next(); !v.done; v = iter.next()) {
-            if (v.value.match(/-tag-active$/)) {
-                imgTag.classList.remove(v.value);
-                break;
-            }
-        }
-    }
-}
-function HSL01_hide_page() {
-    let els = document.getElementsByClassName('HSL01-slide-page-body');
-    if (els.length < 1) {
-        console.error('no found slide tag page body');
-        return;
-    }
-    for (let index = 0; index < els.length; ++index) {
-        let pageTag = els[index].firstElementChild;
-        if (!pageTag.classList.contains('HSL01-slide-page-hidden')) {
-            pageTag.classList.add('HSL01-slide-page-hidden');
-        }
-    }
-}
-function HSL01_show_page(className) {
-    let els = document.getElementsByClassName(className);
-    if (els.length !== 1) {
-        console.error('no found slide page(' + className + ')');
-        return;
-    }
-    let c = els[0];
-    c.classList.remove('HSL01-slide-page-hidden');
-}
-function HSL01_do_slide(className, inOut) {
-    let els = document.getElementsByClassName('HSL01-slide-container');
-    if (els.length !== 1) {
-        console.error('no found slide container');
-        return;
-    }
-    let c = els[0];
-    let rmList = [];
-    c.classList.forEach(clsName => {
-        if (clsName.match(/-slidein$|-slideout$/)) {
-            rmList.push(clsName);
-        }
-    });
-    c.classList.remove(...rmList);
-    c.classList.add(className + '-slide' + inOut);
-}
-function HSL01_is_page_actice(target) {
-    const iter = target.classList.values();
-    for (let v = iter.next(); !v.done; v = iter.next()) {
-        if (v.value.match(/-tag-active$/)) {
-            return true;
-        }
-    }
-    return false;
-}
-function HSL01_clickEvent(event) {
-    let target = event.target;
-    let slidePage = '';
-    if (target.classList.contains('HSL01-slide-page01-tag')) {
-        slidePage = 'HSL01-slide-page01';
-    } else if (target.classList.contains('HSL01-slide-page02-tag')) {
-        slidePage = 'HSL01-slide-page02';
-    } else if (target.classList.contains('HSL01-slide-page03-tag')) {
-        slidePage = 'HSL01-slide-page03';
-    }
-    if (slidePage) {
-        if (HSL01_is_page_actice(target)) {
-            HSL01_hide_page();
-            HSL01_clear_active_tag();
-            HSL01_do_slide(slidePage, 'out');
-        } else {
-            HSL01_show_slide_body();
-            HSL01_hide_page();
-            HSL01_clear_active_tag();
-            HSL01_show_page(slidePage);
-            HSL01_do_slide(slidePage, 'in');
-            target.classList.add(slidePage + '-tag-active');
-        }
-    }
-}
+/*
 window.addEventListener('load', (event) => {
     //console.log('start content slider sample');
 //TODO    HSL01_init_body();
     document.addEventListener('click', HSL01_clickEvent);
 });
+*/
+const mySlider = new HSL01_Slide();
+mySlider.start_slide();
         </script>
     </body>
 </html>
