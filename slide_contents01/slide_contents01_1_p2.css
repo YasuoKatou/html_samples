@@ -1,0 +1,13 @@
+.HSL01-slide-page02 {
+    background-color: var(--HSL01-slide-page02-bg-color);
+    width: var(--HSL01-slide-page02-width);
+    height:100%;
+}
+
+.HSL01-slide-page02 ul {
+    margin: 0 var(--HSL01-PHASE-LISTMERGIN);
+}
+
+.HSL01-slide-page02 li {
+    list-style: none;
+}

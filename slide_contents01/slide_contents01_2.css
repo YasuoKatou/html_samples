@@ -1,0 +1,100 @@
+.HSL01-table-fixed-side {
+    background-color: chartreuse;
+    width: var(--HSL01-TABLE-COLUMN-WIDTH);
+    display: flex;
+    flex-direction: column;
+}
+
+.HSL01-table-fixed-side > div:not(:last-child) {
+    height: 1rem;
+    text-align: right;
+}
+
+.HSL01-table-fixed-side > div:nth-child(3) {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+}
+
+.HSL01-table-fixed-side > div:last-child {
+    background-color: cornflowerblue;
+    height: 100%;
+    overflow: auto;     /* TODO JS によるスクロールを実装する時、hidden に変更すること */
+}
+
+.HSL01-table-fixed-side > div:nth-child(3) > p:nth-child(1),
+#HSL01-table-fixed-side-contents > ul > li:nth-child(1) {
+    width: var(--HSL01-TABLE-COLUMN-WIDTH-NO);
+}
+
+.HSL01-table-fixed-side > div:nth-child(3) > p:nth-child(2),
+#HSL01-table-fixed-side-contents > ul > li:nth-child(2) {
+    width: var(--HSL01-TABLE-COLUMN-WIDTH-TITLE);
+}
+
+.HSL01-table-fixed-side > div:nth-child(3) > p:nth-child(3),
+#HSL01-table-fixed-side-contents > ul > li:nth-child(3) {
+    width: var(--HSL01-TABLE-COLUMN-WIDTH-HANDLER);
+}
+
+.HSL01-table-fixed-side > div:nth-child(3) > p:nth-child(4),
+#HSL01-table-fixed-side-contents > ul > li:nth-child(4) {
+    width: var(--HSL01-TABLE-COLUMN-WIDTH-COST);
+}
+
+#HSL01-table-fixed-side-contents > ul > li:nth-child(4) {
+    text-align: right;
+}
+
+#HSL01-table-fixed-side-contents > ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+}
+
+.HSL01-table-variable-contents {
+    overflow: auto;     /* TODO JS によるスクロールを実装する時、hidden に変更すること */
+    background-color: darkgreen;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.HSL01-table-variable-contents > div:nth-child(1) {
+    width: fit-content;
+    min-width: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: darkorange;
+}
+
+.HSL01-table-variable-contents > div:nth-child(1) p {
+    font-size: x-small;
+}
+
+.HSL01-table-variable-contents > div:nth-child(1) > div {
+    box-sizing: border-box;
+    border: 1px solid gray;
+}
+
+.HSL01-table-variable-contents > div > div > div {
+    box-sizing: border-box;
+    border: 1px solid gray;
+    height: 1rem;
+}
+
+.HSL01-table-variable-contents > div > div > div:nth-child(1) {
+    text-align: center;
+}
+
+.HSL01-table-variable-contents > div > div > div:nth-child(2) {
+    display: flex;
+    flex-direction: row;
+}
+
+.HSL01-table-variable-contents > div > div > div:nth-child(2) > p {
+    box-sizing: border-box;
+    border: 1px solid gray;
+    width: var(--HSL01-TABLE-COLUMN-WIDTH-DATE);
+    text-align: center;
+}
