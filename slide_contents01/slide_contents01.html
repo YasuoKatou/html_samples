@@ -52,7 +52,7 @@
     </div>
 </div>
 <div class="HSL01-table-variable-contents">
-    <div>
+    <div id="HSL01-table-variable-contents-header">
         <div>
             <div class="contents-header1">
                 <p>8月</p>
@@ -99,7 +99,7 @@
             </div>
         </div>    
     </div>
-    <div class="variable-contents">
+    <div id="HSL01-table-variable-contents-body">
 
     </div>
 </div>
@@ -151,8 +151,8 @@
 <div>
     <label for="date-period">期間：</label>
     <select id="date-period" name="date-period">
-        <option value="1" selected>１ヶ月</option>
-        <option value="2">２ヶ月</option>
+        <option value="1">１ヶ月</option>
+        <option value="2" selected>２ヶ月</option>
         <option value="3">３ヶ月</option>
     </select>
 </div>
@@ -167,204 +167,17 @@
             </div>
         </div>
         <script type="text/javascript" src="js/HSL01_slide.js"></script>
+        <script type="text/javascript" src="js/HSL01_calender.js"></script>
+        <script type="text/javascript" src="js/HSL01_working_calender.js"></script>
         <script>
-/**
- * カレンダークラス
- */
-class HSL01_Calender {
-    /**
-     * 指定日付の月末日を取得する.
-     */
-    getLastDate(thisDate) {
-        return new Date(thisDate.getFullYear(), thisDate.getMonth() + 1, 0);
-    }
-    makeDayList(today, isStart1stDay) {
-        const lastDate = this.getLastDate(today);      // 月末の日付
-        const firstDate = isStart1stDay ? 1 : today.getDate();
-        let dayWork = new Date(today.getFullYear(), today.getMonth(), firstDate);
-        const dayList = [];
-        while (dayWork <= lastDate) {
-            dayList.push(new Date(dayWork.getTime()));
-            dayWork.setDate(dayWork.getDate() + 1);
-        }
-        return dayList;
-    }
-    /**
-     * カレンダー情報を作成する.
-     * 2022
-     *      11  1 - 30
-     *      12  1 - 31
-     * 2023
-     *      1   1 - 31
-     *      2   1 - 28
-     */
-    getCalenderList(fromDate, isStart1stDay, numberOfMonth) {
-        const calender = [];
-        let monthList = null;
-        let flag = isStart1stDay;
-        let now = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
-        for (let monthCount = 0; monthCount < numberOfMonth; ++monthCount) {
-            if (!monthList) monthList = [];
-            monthList.push(this.makeDayList(now, flag));
-            var nextMonth = fromDate.getMonth() + 1;
-            if (nextMonth < 12) {
-                now = new Date(now.getFullYear(), nextMonth, 1);
-            } else {
-                calender.push(monthList);
-                now = new Date(now.getFullYear() + 1, 1, 1);
-            }
-            flag = false;
-        }
-        if (monthList && !calender.includes(monthList)) calender.push(monthList);
-        return calender;
-    }
-}
 
-function HSL01_init_getWorkItems() {
-    let items = [];
-    // 作業項目の一覧を取得
-    try {
-        let tags = document.getElementsByClassName('HSL01-slide-page02');
-        if (tags.length !==1) throw 'HSL01-slide-page02 class not found !';
-        tags = tags.item(0).getElementsByTagName('ul');
-        if (tags.length !==1) throw 'list tag not found !';
-        tags = tags.item(0).getElementsByTagName('li');
-        if (tags.length === 0) throw '作業項目が未設定です.';
-        for (var liTag of tags) {
-            items.push(liTag.textContent);
-        }
-    } catch (ex) {
-        alert(ex);
-    } finally {
-        return items;
-    }
-}
-
-function clearTableBody(element) {
-    try {
-        let tags = document.getElementsByClassName('HSL01-body-table-body');
-        if (tags.length !== 1) throw 'not selected body !'
-        tags = tags.item(0).getElementsByClassName('HSL01-body-table-body-contents')
-        if (tags.length !== 2) throw 'not selected title and date in body !'
-        for (let index = 0; index < tags.length; ++index) {
-            let tbody = tags.item(index);
-            while (tbody.firstChild) {
-                tbody.removeChild(tbody.firstChild);
-            }
-        }
-    } catch (ex) {
-        alert(ex);
-    }
-}
-
-function HSL01_init_calender() {
-    try {
-        let tag = document.getElementById('start-date');
-        if (!tag) throw 'start-date input tag not found !';
-        const today = new Date();
-        tag.valueAsDate = today;
-
-        tag = document.getElementById('start-first-date');
-        if (!tag) throw 'start-first-date input tag not found !';
-        const start1stDate = tag.checked;
-
-        tag = document.getElementById('date-period');
-        if (!tag) throw 'date-period input tag not found !';
-        const numberOfMonth = tag.options[tag.selectedIndex].value;
-
-        const calender = new HSL01_Calender();
-        const calenderData = calender.getCalenderList(today, start1stDate, numberOfMonth);
-        //console.log(calenderData);
-        return calenderData;
-    } catch (ex) {
-        alert(ex);
-        return [];
-    }
-}
-
-function HSL01_init_calender_header(calenderData) {
-    try {
-        let tags = document.getElementsByClassName('HSL01-body-table-header-date');
-        if (tags.length !== 1) throw 'not selected calender header !';
-        const headerCalender = tags.item(0);
-        while (headerCalender.firstChild) {
-            headerCalender.removeChild(headerCalender.firstChild);
-        }
-        for (let monthList of calenderData) {
-            for (let month of monthList) {
-                for (let date of month) {
-                    let p = document.createElement('p');
-                    p.appendChild(document.createTextNode(date.getDate()));
-                    let li = document.createElement('li');
-                    li.appendChild(p);
-                    let dayOfWeek = date.getDay();
-                    if (dayOfWeek === 0) {
-                        p.classList.add('HSL01-calender-sun');
-                    } else if (dayOfWeek === 6) {
-                        p.classList.add('HSL01-calender-sat');
-                    }
-                    headerCalender.appendChild(li);
-                }
-            }
-        }
-    } catch (ex) {
-        alert(ex);
-    }
-}
-
-function HSL01_table_contents_title(data) {
-    let p = document.createElement('p');
-    p.appendChild(document.createTextNode(data));
-    let li = document.createElement('li');
-    li.appendChild(p);
-    return li;
-}
-
-function HSL01_init_table_contents() {
-    try {
-        let tags = document.getElementsByClassName('HSL01-body-table-body');
-        if (tags.length !== 1) throw 'not selected body !'
-        tags = tags.item(0).getElementsByClassName('HSL01-body-table-body-contents')
-        if (tags.length !== 2) throw 'not selected title and date in body !'
-        let title = tags.item(0);
-        let workItemList = HSL01_init_getWorkItems();
-        if (workItemList.length < 1) return;
-        // console.log(workItemList);
-        let no = 1;
-        for (const item of workItemList) {
-            let ul = document.createElement('ul');
-
-            ul.appendChild(HSL01_table_contents_title(no++));
-            ul.appendChild(HSL01_table_contents_title(item));
-            ul.appendChild(HSL01_table_contents_title(''));
-            ul.appendChild(HSL01_table_contents_title(''));
-
-            title.appendChild(ul);
-        }
-
-        let date = tags.item(0);
-        // TODO
-    } catch (ex) {
-        alert(ex);
-    }
-}
-
-function HSL01_init_body() {
-    clearTableBody();
-    HSL01_init_table_contents();
-    const calenderData = HSL01_init_calender();
-    HSL01_init_calender_header(calenderData);
-}
-
-/*
+const mySlider = new HSL01_Slide();
+const myCalender = new HSL01_Working_Calender();
 window.addEventListener('load', (event) => {
     //console.log('start content slider sample');
-//TODO    HSL01_init_body();
-    document.addEventListener('click', HSL01_clickEvent);
+    myCalender.init_calender();
+    mySlider.start_slide();
 });
-*/
-const mySlider = new HSL01_Slide();
-mySlider.start_slide();
         </script>
     </body>
 </html>

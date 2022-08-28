@@ -60,7 +60,7 @@
     flex-direction: column;
 }
 
-.HSL01-table-variable-contents > div:nth-child(1) {
+#HSL01-table-variable-contents-header {
     width: fit-content;
     min-width: 100%;
     display: flex;
@@ -68,31 +68,31 @@
     background-color: darkorange;
 }
 
-.HSL01-table-variable-contents > div:nth-child(1) p {
+#HSL01-table-variable-contents-header p {
     font-size: x-small;
 }
 
-.HSL01-table-variable-contents > div:nth-child(1) > div {
+#HSL01-table-variable-contents-header > div {
     box-sizing: border-box;
     border: 1px solid gray;
 }
 
-.HSL01-table-variable-contents > div > div > div {
+#HSL01-table-variable-contents-header > div > div {
     box-sizing: border-box;
     border: 1px solid gray;
     height: 1rem;
 }
 
-.HSL01-table-variable-contents > div > div > div:nth-child(1) {
+#HSL01-table-variable-contents-header > div > div:nth-child(1) {
     text-align: center;
 }
 
-.HSL01-table-variable-contents > div > div > div:nth-child(2) {
+#HSL01-table-variable-contents-header > div > div:nth-child(2) {
     display: flex;
     flex-direction: row;
 }
 
-.HSL01-table-variable-contents > div > div > div:nth-child(2) > p {
+#HSL01-table-variable-contents-header > div > div:nth-child(2) > p {
     box-sizing: border-box;
     border: 1px solid gray;
     width: var(--HSL01-TABLE-COLUMN-WIDTH-DATE);
