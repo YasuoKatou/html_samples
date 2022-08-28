@@ -1,5 +1,5 @@
 .HSL01-table-fixed-side {
-    background-color: chartreuse;
+    /*background-color: chartreuse;*/
     width: var(--HSL01-TABLE-COLUMN-WIDTH);
     display: flex;
     flex-direction: column;
@@ -8,16 +8,19 @@
 .HSL01-table-fixed-side > div:not(:last-child) {
     height: 1rem;
     text-align: right;
+    background-color: whitesmoke;
 }
 
 .HSL01-table-fixed-side > div:nth-child(3) {
-    text-align: center;
     display: flex;
     flex-direction: row;
+    text-align: center;
+    font-size: small;
+    font-weight: bold;
 }
 
 .HSL01-table-fixed-side > div:last-child {
-    background-color: cornflowerblue;
+    /*background-color: cornflowerblue;*/
     height: 100%;
     overflow: auto;     /* TODO JS によるスクロールを実装する時、hidden に変更すること */
 }
@@ -50,11 +53,32 @@
     display: flex;
     flex-direction: row;
     list-style: none;
+    background-color: lightcyan;
+
+    box-sizing: border-box;
+    border-style: solid solid none solid;
+    border-width: 1px;
+    border-color: darkgray;
+}
+
+#HSL01-table-fixed-side-contents > ul:last-child {
+    border-style: solid;
+}
+
+#HSL01-table-fixed-side-contents > ul > li:not(:last-child) {
+    box-sizing: border-box;
+    border-style: none solid none none;
+    border-width: 1px;
+    border-color: darkgray;
+}
+
+#HSL01-table-fixed-side-contents > ul > li:last-child {
+    border-style: none;
 }
 
 .HSL01-table-variable-contents {
     overflow: auto;     /* TODO JS によるスクロールを実装する時、hidden に変更すること */
-    background-color: darkgreen;
+    /*background-color: darkgreen;*/
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -65,7 +89,7 @@
     min-width: 100%;
     display: flex;
     flex-direction: row;
-    background-color: darkorange;
+    background-color: whitesmoke;
 }
 
 #HSL01-table-variable-contents-header p {
@@ -74,27 +98,59 @@
 
 #HSL01-table-variable-contents-header > div {
     box-sizing: border-box;
-    border: 1px solid gray;
+    border-style: none none solid none;
+    border-width: 1px;
+    border-color: darkgray;
 }
 
 #HSL01-table-variable-contents-header > div > div {
+/*
     box-sizing: border-box;
     border: 1px solid gray;
+*/
     height: 1rem;
 }
 
 #HSL01-table-variable-contents-header > div > div:nth-child(1) {
     text-align: center;
+
+    box-sizing: border-box;
+    border-style: solid none none solid;
+    border-width: 1px;
+    border-color: darkgray;
 }
 
-#HSL01-table-variable-contents-header > div > div:nth-child(2) {
+#HSL01-table-variable-contents-header > div:last-child > div:first-child {
+    border-style: solid solid none solid;
+}
+
+#HSL01-table-variable-contents-header > div > div:not(:first-child) {
     display: flex;
     flex-direction: row;
+
+    box-sizing: border-box;
+    border-style: solid none none solid;
+    border-width: 1px;
+    border-color: darkgray;
 }
 
-#HSL01-table-variable-contents-header > div > div:nth-child(2) > p {
+#HSL01-table-variable-contents-header > div:last-child > div:not(:first-child) {
+    border-style: solid solid none solid;
+}
+
+#HSL01-table-variable-contents-header > div > div:not(:first-child) > p {
+/*
     box-sizing: border-box;
     border: 1px solid gray;
+*/
     width: var(--HSL01-TABLE-COLUMN-WIDTH-DATE);
     text-align: center;
+
+    box-sizing: border-box;
+    border-style: none solid none none;
+    border-width: 1px;
+    border-color: darkgray;
+}
+#HSL01-table-variable-contents-header > div > div:not(:first-child)> p:last-child {
+    border-style: none;
 }

@@ -131,7 +131,9 @@ class HSL01_Working_Calender {
                             p.classList.add('HSL01-calender-sat');
                         }
                         header2.appendChild(p);
-                        header3.appendChild(document.createElement('p'));
+                        p = document.createElement('p');
+                        p.appendChild(document.createTextNode(''));
+                        header3.appendChild(p);
                     }
                     let headerMonth = document.createElement('div');
                     headerMonth.appendChild(header1);

@@ -70,7 +70,7 @@ form {
     position: absolute;
     top: 0;
     left: var(--HSL01-slider-tag-size);
-    background-color: navy;
+    /*background-color: navy;*/
     height: 100%;
     width: calc(100% - var(--HSL01-slider-tag-size));
 
