@@ -58,6 +58,7 @@ form {
         + var(--HSL01-TABLE-COLUMN-WIDTH-HANDLER)
         + var(--HSL01-TABLE-COLUMN-WIDTH-COST));
     --HSL01-TABLE-COLUMN-WIDTH-DATE: 1.5rem;
+    --HSL01-TABLE-GRID_COLOR: darkgray;
 }
 
 .HSL01-container {
