@@ -141,35 +141,35 @@ class HSL01_Working_Calender {
 
     _init_calender_header() {
         try {
-            for (let monthList of this._calenderData) {
-                for (let month of monthList) {
-                    let header1 = document.createElement('div');
-                    let p = document.createElement('p');
-                    p.appendChild(document.createTextNode(month[0].getMonth() + 1 + '月'));
-                    header1.appendChild(p);
+            for (let month of this._calenderData) {
+                let header1 = document.createElement('div');
+                let p = document.createElement('p');
+                p.appendChild(document.createTextNode(month['startDate'].getMonth() + 1 + '月'));
+                header1.appendChild(p);
 
-                    let header2 = document.createElement('div');
-                    let header3 = document.createElement('div');
-                    for (let date of month) {
-                        p = document.createElement('p');
-                        p.appendChild(document.createTextNode(date.getDate()));
-                        let dayOfWeek = date.getDay();
-                        if (dayOfWeek === 0) {
-                            p.classList.add('HSL01-calender-sun');
-                        } else if (dayOfWeek === 6) {
-                            p.classList.add('HSL01-calender-sat');
-                        }
-                        header2.appendChild(p);
-                        p = document.createElement('p');
-                        p.appendChild(document.createTextNode(''));
-                        header3.appendChild(p);
+                let header2 = document.createElement('div');
+                let header3 = document.createElement('div');
+                let startDay = month['startDate'].getDate();
+                let dayOfWeek = month['startDate'].getDay();
+                for (let dayCount = 0; dayCount < month['days']; ++dayCount) {
+                    p = document.createElement('p');
+                    p.appendChild(document.createTextNode(startDay + dayCount));
+                    if (dayOfWeek === 0) {
+                        p.classList.add('HSL01-calender-sun');
+                    } else if (dayOfWeek === 6) {
+                        p.classList.add('HSL01-calender-sat');
                     }
-                    let headerMonth = document.createElement('div');
-                    headerMonth.appendChild(header1);
-                    headerMonth.appendChild(header2);
-                    headerMonth.appendChild(header3);
-                    this._varContHeader.appendChild(headerMonth);
+                    header2.appendChild(p);
+                    p = document.createElement('p');
+                    p.appendChild(document.createTextNode(''));
+                    header3.appendChild(p);
+                    if (++dayOfWeek > 6) dayOfWeek = 0;
                 }
+                let headerMonth = document.createElement('div');
+                headerMonth.appendChild(header1);
+                headerMonth.appendChild(header2);
+                headerMonth.appendChild(header3);
+                this._varContHeader.appendChild(headerMonth);
             }
         } catch (ex) {
             alert(ex);
