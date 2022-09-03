@@ -3,3 +3,8 @@
     width: var(--HSL01-slide-page03-width);
     height:100%;
 }
+
+.HSL01-slide-page03-button {
+    margin-top: 2rem;
+    text-align: center;
+}

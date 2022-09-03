@@ -5,11 +5,11 @@
     /**
      * 指定日付の月末日を取得する.
      */
-    getLastDate(thisDate) {
+    _getLastDate(thisDate) {
         return new Date(thisDate.getFullYear(), thisDate.getMonth() + 1, 0);
     }
-    makeDayList(today, isStart1stDay) {
-        const lastDate = this.getLastDate(today);      // 月末の日付
+    _makeDayList(today, isStart1stDay) {
+        const lastDate = this._getLastDate(today);      // 月末の日付
         const firstDate = isStart1stDay ? 1 : today.getDate();
         let dayWork = new Date(today.getFullYear(), today.getMonth(), firstDate);
         const dayList = [];
@@ -35,15 +35,15 @@
         let now = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
         for (let monthCount = 0; monthCount < numberOfMonth; ++monthCount) {
             if (!monthList) monthList = [];
-            monthList.push(this.makeDayList(now, flag));
-            var nextMonth = fromDate.getMonth() + 1;
+            monthList.push(this._makeDayList(now, flag));
+            var nextMonth = now.getMonth() + 1;
             if (nextMonth < 12) {
                 now = new Date(now.getFullYear(), nextMonth, 1);
             } else {
                 calender.push(monthList);
-                now = new Date(now.getFullYear() + 1, 1, 1);
+                now = new Date(now.getFullYear() + 1, 0, 1);
             }
-            flag = false;
+            flag = true;
         }
         if (monthList && !calender.includes(monthList)) calender.push(monthList);
         return calender;

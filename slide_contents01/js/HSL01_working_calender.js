@@ -3,12 +3,36 @@ class HSL01_Working_Calender {
     _sideFixedContent = null;
     _varContHeader = null;
     _varContBody = null;
+    _calenderData = null;
 
     init_calender() {
+        this._initPage(true);
+
+        const btn = document.getElementById('HSL01-calender-set');
+        if (btn) {
+            btn.addEventListener('click', this._getCalenderChangeFunction());
+        } else {
+            alert('HSL01-calender-set id not found !');
+        }
+    }
+
+    _getCalenderChangeFunction() {
+        let self = this;
+        return function(event) {
+            setTimeout(function() {
+                self._calenderChangeEvent(event);
+            }, 0);
+        }
+    }
+    _calenderChangeEvent(event) {
+        this._initPage(false);
+    }
+
+    _initPage(isInit) {
         this._clearTableBody();
+        this._calenderData = this._init_calender(isInit);
+        this._init_calender_header();
         this._init_table_contents();
-        const calenderData = this._init_calender();
-        this._init_calender_header(calenderData);
     }
 
     _clearTableBody() {
@@ -28,6 +52,7 @@ class HSL01_Working_Calender {
             alert(ex);
         }
     }
+
 
     _removeFirstChild(rootTag) {
         while (rootTag.firstChild) {
@@ -85,12 +110,16 @@ class HSL01_Working_Calender {
         }
     }
     
-    _init_calender() {
+    _init_calender(isInit) {
         try {
             let tag = document.getElementById('start-date');
             if (!tag) throw 'start-date input tag not found !';
-            const today = new Date();
-            tag.valueAsDate = today;
+            let today = new Date();
+            if (isInit) {
+                tag.valueAsDate = today;
+            } else {
+                today = tag.valueAsDate;
+            }
     
             tag = document.getElementById('start-first-date');
             if (!tag) throw 'start-first-date input tag not found !';
@@ -110,9 +139,9 @@ class HSL01_Working_Calender {
         }
     }
 
-    _init_calender_header(calenderData) {
+    _init_calender_header() {
         try {
-            for (let monthList of calenderData) {
+            for (let monthList of this._calenderData) {
                 for (let month of monthList) {
                     let header1 = document.createElement('div');
                     let p = document.createElement('p');
