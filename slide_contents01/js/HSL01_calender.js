@@ -4,7 +4,7 @@
  class HSL01_Calender {
     /**
      * 指定日付の月末日を取得する.
-     * @param {Date} thisDate 
+     * @param {Date} thisDate
      * @returns 月末日付
      */
     _getLastDate(thisDate) {

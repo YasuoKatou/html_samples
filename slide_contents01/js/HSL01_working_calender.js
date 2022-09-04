@@ -68,13 +68,13 @@ class HSL01_Working_Calender {
             let no = 1;
             for (const item of workItemList) {
                 let ul = document.createElement('ul');
-    
                 ul.appendChild(this._table_contents_title(no++));
                 ul.appendChild(this._table_contents_title(item));
                 ul.appendChild(this._table_contents_title(''));
                 ul.appendChild(this._table_contents_title(''));
-    
                 this._sideFixedContent.appendChild(ul);
+
+                this._appendCalenderTag();
             }
             // TODO
         } catch (ex) {
@@ -89,7 +89,7 @@ class HSL01_Working_Calender {
         li.appendChild(p);
         return li;
     }
-    
+
     _init_getWorkItems() {
         let items = [];
         // 作業項目の一覧を取得
@@ -109,7 +109,7 @@ class HSL01_Working_Calender {
             return items;
         }
     }
-    
+
     _init_calender(isInit) {
         try {
             let tag = document.getElementById('start-date');
@@ -120,15 +120,15 @@ class HSL01_Working_Calender {
             } else {
                 today = tag.valueAsDate;
             }
-    
+
             tag = document.getElementById('start-first-date');
             if (!tag) throw 'start-first-date input tag not found !';
             const start1stDate = tag.checked;
-    
+
             tag = document.getElementById('date-period');
             if (!tag) throw 'date-period input tag not found !';
             const numberOfMonth = tag.options[tag.selectedIndex].value;
-    
+
             const calender = new HSL01_Calender();
             const calenderData = calender.getCalenderList(today, start1stDate, numberOfMonth);
             //console.log(calenderData);
@@ -173,6 +173,34 @@ class HSL01_Working_Calender {
             }
         } catch (ex) {
             alert(ex);
+        }
+    }
+
+    /**
+     * カレンダーコンテンツの行を追加する.
+     */
+     _appendCalenderTag() {
+        try {
+            const row = document.createElement('div');
+            for (let month of this._calenderData) {
+                let monthTag = document.createElement('div');
+                let startDay = month['startDate'].getDate();
+                let dayOfWeek = -1;     //month['startDate'].getDay();
+                for (let dayCount = 0; dayCount < month['days']; ++dayCount) {
+                    let p = document.createElement('p');
+                    p.appendChild(document.createTextNode(''));
+                    if (dayOfWeek === 0) {
+                        p.classList.add('HSL01-calender-sun');
+                    } else if (dayOfWeek === 6) {
+                        p.classList.add('HSL01-calender-sat');
+                    }
+                    monthTag.appendChild(p);
+                }
+                row.appendChild(monthTag);
+            }
+            this._varContBody.appendChild(row);
+        } catch (ex) {
+            alert('error at _appendCalenderTag : ' + ex);
         }
     }
 }
