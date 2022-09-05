@@ -4,9 +4,11 @@ class HSL01_Working_Calender {
     _varContHeader = null;
     _varContBody = null;
     _calenderData = null;
+    _holidays = [];
 
     init_calender() {
         this._initPage(true);
+        this._getHolidays();
 
         const btn = document.getElementById('HSL01-calender-set');
         if (btn) {
@@ -149,12 +151,17 @@ class HSL01_Working_Calender {
 
                 let header2 = document.createElement('div');
                 let header3 = document.createElement('div');
+                let thisYear = month['startDate'].getFullYear();
+                let thisMonth = month['startDate'].getMonth();
                 let startDay = month['startDate'].getDate();
                 let dayOfWeek = month['startDate'].getDay();
                 for (let dayCount = 0; dayCount < month['days']; ++dayCount) {
+                    let today = startDay + dayCount;
                     p = document.createElement('p');
-                    p.appendChild(document.createTextNode(startDay + dayCount));
-                    if (dayOfWeek === 0) {
+                    p.appendChild(document.createTextNode(today));
+                    if (this._isPublicHoliday(thisYear, thisMonth, today)) {
+                        p.classList.add('HSL01-calender-holiday');
+                    } else if (dayOfWeek === 0) {
                         p.classList.add('HSL01-calender-sun');
                     } else if (dayOfWeek === 6) {
                         p.classList.add('HSL01-calender-sat');
@@ -184,17 +191,19 @@ class HSL01_Working_Calender {
             const row = document.createElement('div');
             for (let month of this._calenderData) {
                 let monthTag = document.createElement('div');
-                let startDay = month['startDate'].getDate();
-                let dayOfWeek = -1;     //month['startDate'].getDay();
+                let thisYear = month['startDate'].getFullYear();
+                let thisMonth = month['startDate'].getMonth();
+                let todayDay = month['startDate'].getDate();
+                let dayOfWeek = month['startDate'].getDay();
                 for (let dayCount = 0; dayCount < month['days']; ++dayCount) {
                     let p = document.createElement('p');
                     p.appendChild(document.createTextNode(''));
-                    if (dayOfWeek === 0) {
-                        p.classList.add('HSL01-calender-sun');
-                    } else if (dayOfWeek === 6) {
-                        p.classList.add('HSL01-calender-sat');
+                    if (this._isHoliday(thisYear, thisMonth, todayDay, dayOfWeek)) {
+                        p.classList.add('HSL01-horiday');
                     }
                     monthTag.appendChild(p);
+                    ++todayDay;
+                    if (++dayOfWeek > 6) dayOfWeek = 0;
                 }
                 row.appendChild(monthTag);
             }
@@ -202,5 +211,42 @@ class HSL01_Working_Calender {
         } catch (ex) {
             alert('error at _appendCalenderTag : ' + ex);
         }
+    }
+
+    _getHolidays() {
+        let tags;
+        try {
+            const ul = document.getElementById('HSL01-public-holiday-list');
+            if (!ul) throw 'not found public holiday list tag !';
+            let li = ul.firstElementChild;
+            while (li) {
+                tags = li.getElementsByTagName('input');
+                if (!tags) throw 'not found public holiday input tag !';
+                this._holidays.push(new Date(tags[0].value));
+
+                li = li.nextElementSibling;
+            }
+            //console.log(this._holidays);
+        } catch (ex) {
+            alert(ex);
+        }
+    }
+
+    _isHoliday(year, month, date, dayOfWeek) {
+        if (dayOfWeek === 0) {
+            return true;
+        } else if (dayOfWeek === 6) {
+            return true;
+        }
+        return this._isPublicHoliday(year, month, date);
+    }
+
+    _isPublicHoliday(year, month, date) {
+        for (let holiday of this._holidays) {
+            if ((holiday.getFullYear() === year) && (holiday.getMonth() === month) && (holiday.getDate() === date)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -41,7 +41,7 @@
     border-style: solid none none solid;
     box-sizing: border-box;
     border-width: 1px;
-    border-color: var(--HSL01-TABLE-GRID_COLOR);
+    border-color: var(--HSL01-TABLE-GRID-COLOR);
 }
 
 #HSL01-table-fixed-side-contents ul:last-child p {
@@ -49,7 +49,7 @@
     border-style: solid none solid solid;
     box-sizing: border-box;
     border-width: 1px;
-    border-color: var(--HSL01-TABLE-GRID_COLOR);
+    border-color: var(--HSL01-TABLE-GRID-COLOR);
 }
 
 .HSL01-table-fixed-side > div > div:nth-child(3) > ul > li:nth-child(1),
@@ -118,7 +118,7 @@
 
     box-sizing: border-box;
     border-width: 2px;
-    border-color: var(--HSL01-TABLE-GRID_COLOR);
+    border-color: var(--HSL01-TABLE-GRID-COLOR);
 }
 
 /**
@@ -158,7 +158,7 @@
     border-style: solid none solid solid;
     box-sizing: border-box;
     border-width: 1px 0px 1px 2px;
-    border-color: var(--HSL01-TABLE-GRID_COLOR);
+    border-color: var(--HSL01-TABLE-GRID-COLOR);
 }
 
 /**
@@ -170,7 +170,7 @@
     border-style: solid none solid solid;
     box-sizing: border-box;
     border-width: 1px 0px 1px 1px;
-    border-color: var(--HSL01-TABLE-GRID_COLOR);
+    border-color: var(--HSL01-TABLE-GRID-COLOR);
 }
 
 /**
@@ -180,7 +180,7 @@
     border-style: solid solid solid solid;
     box-sizing: border-box;
     border-width: 1px 2px 1px 1px;
-    border-color: var(--HSL01-TABLE-GRID_COLOR);
+    border-color: var(--HSL01-TABLE-GRID-COLOR);
 }
 
 /**
@@ -190,7 +190,7 @@
     border-style: none none solid solid;
     box-sizing: border-box;
     border-width: 0px 0px 1px 2px;
-    border-color: var(--HSL01-TABLE-GRID_COLOR);
+    border-color: var(--HSL01-TABLE-GRID-COLOR);
 }
 
 /**
@@ -202,7 +202,7 @@
      border-style: none none solid solid;
      box-sizing: border-box;
      border-width: 1px;
-     border-color: var(--HSL01-TABLE-GRID_COLOR);
+     border-color: var(--HSL01-TABLE-GRID-COLOR);
 }
 
 /**
@@ -212,7 +212,7 @@
     border-style: none solid solid solid;
     box-sizing: border-box;
     border-width: 0px 2px 1px 1px;
-    border-color: var(--HSL01-TABLE-GRID_COLOR);
+    border-color: var(--HSL01-TABLE-GRID-COLOR);
 }
 
 #HSL01-table-variable-contents-body > div {
@@ -235,7 +235,7 @@
     border-style: solid none none solid;
     box-sizing: border-box;
     border-width: 1px 0px 0px 2px;
-    border-color: var(--HSL01-TABLE-GRID_COLOR);
+    border-color: var(--HSL01-TABLE-GRID-COLOR);
 }
 
 /**
@@ -248,7 +248,7 @@
     border-style: solid none solid solid;
     box-sizing: border-box;
     border-width: 1px 0px 1px 2px;
-    border-color: var(--HSL01-TABLE-GRID_COLOR);
+    border-color: var(--HSL01-TABLE-GRID-COLOR);
 }
 
 /**
@@ -261,7 +261,7 @@
     border-style: solid none none solid;
     box-sizing: border-box;
     border-width: 1px;
-    border-color: var(--HSL01-TABLE-GRID_COLOR);
+    border-color: var(--HSL01-TABLE-GRID-COLOR);
 }
 
 /**
@@ -272,9 +272,9 @@
      border-style: solid solid none solid;
      box-sizing: border-box;
      border-width: 1px 2px 0px 1px;
-     border-color: var(--HSL01-TABLE-GRID_COLOR);
+     border-color: var(--HSL01-TABLE-GRID-COLOR);
  }
- 
+
 /**
  * 最終月以外、最終行、2日目以降
  * 最終月、最終行、2日目～末日前日
@@ -285,9 +285,9 @@
     border-style: solid none solid solid;
     box-sizing: border-box;
     border-width: 1px;
-    border-color: var(--HSL01-TABLE-GRID_COLOR);
+    border-color: var(--HSL01-TABLE-GRID-COLOR);
 }
- 
+
 /**
  * 最終月、最終行、末日
  */
@@ -296,7 +296,7 @@
      border-style: solid solid solid solid;
      box-sizing: border-box;
      border-width: 1px 2px 1px 1px;
-     border-color: var(--HSL01-TABLE-GRID_COLOR);
+     border-color: var(--HSL01-TABLE-GRID-COLOR);
 }
 
 .HSL01-public-holiday > p {
@@ -309,4 +309,8 @@
     width: 8rem;
     padding-right: 0.5rem;
     text-align: right;
+}
+
+.HSL01-horiday {
+    background-color: var(--HSL01-TABLE-GRID-HOLIDAY-COLOR);
 }
