@@ -30,6 +30,11 @@
     overflow: auto;     /* TODO JS によるスクロールを実装する時、hidden に変更すること */
 }
 
+#HSL01-table-variable-contents-body {
+    flex: 1;
+    overflow: auto;
+}
+
 #HSL01-table-variable-contents-body p,
 #HSL01-table-fixed-side-contents ul {
     height: 1.5rem;
@@ -84,7 +89,7 @@
 }
 
 .HSL01-table-variable-contents {
-    overflow: auto;     /* TODO JS によるスクロールを実装する時、hidden に変更すること */
+    overflow: hidden;     /* TODO JS によるスクロールを実装する時、hidden に変更すること */
     /*background-color: darkgreen;*/
     flex: 1;
     display: flex;
@@ -92,8 +97,10 @@
 }
 
 #HSL01-table-variable-contents-header {
-    width: fit-content;
-    min-width: 100%;
+    /*width: fit-content;*/
+    /*min-width: 100%;*/
+    min-height: var(--HSL01-TABLE-DATE-HEADER-HEIGHT);
+    overflow: hidden;
     display: flex;
     flex-direction: row;
     background-color: whitesmoke;
@@ -107,7 +114,7 @@
  * ヘッダー #1 ～ #3 の各高さ
  */
 #HSL01-table-variable-contents-header > div > div {
-    height: 1rem;
+    height: var(--HSL01-TABLE-DATE-HEADER-1ROW-HEIGHT);
 }
 
 /**

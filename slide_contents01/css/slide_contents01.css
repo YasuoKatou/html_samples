@@ -48,6 +48,8 @@ form {
     --HSL01-slide-page03-bg-color: LightYellow;
     --HSL01-slide--animation-time: 1s;
 
+    --HSL01-TABLE-DATE-HEADER-1ROW-HEIGHT: 1rem;
+    --HSL01-TABLE-DATE-HEADER-HEIGHT: calc(1rem * 3);
     --HSL01-TABLE-COLUMN-WIDTH-NO: 3rem;
     --HSL01-TABLE-COLUMN-WIDTH-TITLE: 10rem;
     --HSL01-TABLE-COLUMN-WIDTH-HANDLER: 5rem;

@@ -10,12 +10,19 @@ class HSL01_Working_Calender {
         this._initPage(true);
         this._getHolidays();
 
-        const btn = document.getElementById('HSL01-calender-set');
-        if (btn) {
-            btn.addEventListener('click', this._getCalenderChangeFunction());
+        let tag = document.getElementById('HSL01-calender-set');
+        if (tag) {
+            tag.addEventListener('click', this._getCalenderChangeFunction());
         } else {
             alert('HSL01-calender-set id not found !');
         }
+        //TODO カレンダーパーツのスクロール連動を実装中
+    //     tag = document.getElementById('HSL01-table-variable-contents-body');
+    //     if (tag) {
+    //         tag.addEventListener('scroll', this._getCalenderScrollFunction());
+    //     } else {
+    //         alert('HSL01-calender-set id not found !');
+    //     }
     }
 
     _getCalenderChangeFunction() {
@@ -37,6 +44,20 @@ class HSL01_Working_Calender {
         this._init_table_contents();
     }
 
+/*
+    _getCalenderScrollFunction() {
+        let self = this;
+        return function(event) {
+            setTimeout(function() {
+                self._calenderScrollEvent(event);
+            }, 0);
+        }
+    }
+    _calenderScrollEvent(event) {
+        //console.log('scroll X : ' + event.target.scrollLeft + ', Y : ' + event.target.scrollTop);
+        this._varContHeader.scrollLeft = event.target.scrollLeft;
+    }
+*/
     _clearTableBody() {
         try {
             this._sideFixedContent = document.getElementById('HSL01-table-fixed-side-contents');

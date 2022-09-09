@@ -1,7 +1,11 @@
 .HSL01-slide-page03 {
     background-color: var(--HSL01-slide-page03-bg-color);
     width: var(--HSL01-slide-page03-width);
-    height:100%;
+    overflow-y: auto;
+}
+
+.HSL01-slide-page03 li {
+    list-style: none;
 }
 
 .HSL01-slide-page03-button {
