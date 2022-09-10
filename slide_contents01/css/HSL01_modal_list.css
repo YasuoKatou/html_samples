@@ -1,0 +1,48 @@
+#HSL01-modal-list {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+
+#HSL01-modal-list > div {
+    background-color: ivory;
+    width: fit-content;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#HSL01-modal-list > div > div:nth-child(1) {
+    background-color: mediumseagreen;
+    padding-left: 1rem;
+    padding-right: 0.5rem;
+    display: flex;
+    flex-direction: row;
+}
+
+#HSL01-modal-list > div > div:nth-child(1) > h3 {
+    color: azure;
+    flex: 1;
+}
+
+#HSL01-modal-list > div > div:nth-child(1) > img {
+    margin: auto;
+    width: 0.9rem;
+    height: 0.9rem;
+}
+
+#HSL01-modal-list > div > div:nth-child(2) {
+    min-width: 30rem;
+    padding: 0.5rem 1rem;
+}
+
+#HSL01-modal-list > div > div:nth-child(2) > ul > li {
+    list-style: none;
+}
