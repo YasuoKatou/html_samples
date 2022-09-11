@@ -46,3 +46,14 @@
 #HSL01-modal-list > div > div:nth-child(2) > ul > li {
     list-style: none;
 }
+
+#HSL01-modal-list > div > div:nth-child(2) > ul > li > p {
+    font-weight: normal;
+    background-color: ivory;
+}
+
+#HSL01-modal-list > div > div:nth-child(2) > ul > li > p:hover {
+    font-weight: bold;
+    color: azure;
+    background-color: orange;
+}

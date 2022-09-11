@@ -127,7 +127,21 @@ class HSL01_Working_Calender {
         //console.log('_getCalenderItemOperationEvent');
         const modal = new HSL01_Modal_List('HSL01-modal-list');
         modal.listItems = this._calenderItemMenu;
-        modal.showModal(null);
+        modal.showModal(this._getListItemClickFunction());
+    }
+
+    _getListItemClickFunction() {
+        let self = this;
+        return function(modal, operation) {
+            setTimeout(function() {
+                self._doCalenderItem(modal, operation);
+            }, 0);
+        }
+    }
+    _doCalenderItem(modal, operation) {
+        modal.closeModal();
+        // TODO 以下に、operation に対する処理を実装する
+        console.log('_doCalenderItem : ' + operation);
     }
 
     _table_contents_title(data) {
