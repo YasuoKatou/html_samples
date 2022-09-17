@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="list-nest01.css">
+    </head>
+    <body>
+        <section class="header">
+            <h1>ネストした一覧のサンプル</h1>
+        </section>
+        <form action="#" onsubmit="return false;" name="listOperation">
+            <input type="radio" id="ope-movetop" name="list-operation" value="movetop" checked><label for="ope-movetop">先頭に移動</label>
+            <input type="radio" id="ope-moveup" name="list-operation" value="moveup"><label for="ope-moveup">一つ上に移動</label>
+            <input type="radio" id="ope-movedown" name="list-operation" value="movedown"><label for="ope-movedown">一つ下に移動</label>
+            <input type="radio" id="ope-movebottom" name="list-operation" value="movebottom"><label for="ope-movebottom">末尾に移動</label>
+            <br/>
+            <input type="radio" id="ope-add1" name="list-operation" value="add1"><label for="ope-add1">同レベルに追加</label>
+            <input type="radio" id="ope-add2" name="list-operation" value="add2"><label for="ope-add2">下位レベルに追加</label>
+            <br/>
+            <input type="radio" id="ope-toggledisplay" name="list-operation" value="toggledisplay"><label for="ope-toggledisplay">下位レベルの表示／非表示</label>
+            <br/>
+            <input type="radio" id="ope-deleterow" name="list-operation" value="deleterow"><label for="ope-deleterow">削除</label>
+            <input type="radio" id="ope-nop" name="list-operation" value="nop"><label for="ope-nop">操作なし</label>
+            <!--
+            <input type="radio" id="ope-" name="list-operation" value=""><label for="ope-"></label>
+            <input type="radio" id="ope-" name="list-operation" value=""><label for="ope-"></label>
+            -->
+        </form>
+        <ul id="list01">
+            <li><p>ルート#1</p>
+                <ul>
+                    <li><p>ネスト1-1</p></li>
+                    <li><p>ネスト1-2</p></li>
+                </ul>
+            </li>
+            <li><p>ルート#2</p></li>
+            <li><p>ルート#3</p></li>
+            <li><p>ルート#4</p></li>
+            <li><p>ルート#5</p></li>
+            <li><p>ルート#6</p></li>
+            <li><p>ルート#7</p></li>
+            <li><p>ルート#8</p></li>
+            <li><p>ルート#9</p></li>
+            <li><p>ルート#10</p></li>
+        </ul>
+        <script>
+class LNT01_List_Node {
+    _list_func = {};
+    _listRootNode = null;
+    _nodeCounter = 0;
+    constructor(listRootNode) {
+        this._listRootNode = listRootNode;
+        this._nodeCounter = listRootNode.children.length;
+        this.makeFUnctionTable();
+    }
+
+    /**
+     * 一覧を操作する関数テーブルを作成する
+     */
+    makeFUnctionTable() {
+        const self = this;
+        this._list_func.movetop = function(row) {
+            const ul = self._getListRoot(row, 'ul');
+            ul.insertBefore(row, ul.firstChild);
+        };
+        this._list_func.moveup = function(row) {
+            if (!row.previousElementSibling) {
+                console.log('no more up')
+                return;
+            }
+            const ul = self._getListRoot(row, 'ul');
+            ul.insertBefore(row, row.previousElementSibling);
+        };
+        this._list_func.movedown = function(row) {
+            if (!row.nextElementSibling) {
+                console.log('no more down')
+                return;
+            }
+            const ul = self._getListRoot(row, 'ul');
+            ul.insertBefore(row.nextElementSibling, row);
+        };
+        this._list_func.movebottom = function(row) {
+            const ul = self._getListRoot(row, 'ul');
+            ul.appendChild(row);
+        };
+        this._list_func.add1 = function(row) {
+            const ul = self._getListRoot(row, 'ul');
+            ul.insertBefore(self._makeNewNode(), row.nextElementSibling);
+        };
+        this._list_func.add2 = function(row) {
+            const ul = self._getListRoot(row, 'ul');
+            let childListNode = self._getChildListNode(row);
+            if (!childListNode) {
+                childListNode = document.createElement('ul');
+                row.appendChild(childListNode);
+            }
+            childListNode.appendChild(self._makeNewNode());
+        };
+        this._list_func.deleterow = function(row) {
+            const ret = confirm('「' + self._getTitle(row) + '」を削除します.');
+            if (!ret) return;
+            const ul = self._getListRoot(row, 'ul');
+            ul.removeChild(row);
+        }
+    }
+
+    _getListRoot(li, tag) {
+        const tagName = tag.toUpperCase();
+        try {
+            let parent = li.parentNode;
+            while (parent.nodeName.toUpperCase() !== tagName) parent = parentNode;
+            return parent;
+        } catch (ex) {
+            alert(ex);
+        }
+    }
+
+    _getTitle(target) {
+        return target.firstChild.textContent;
+    }
+
+    _makeNewNode() {
+        const rowTitle = document.createElement('p');
+        ++this._nodeCounter;
+        rowTitle.appendChild(document.createTextNode('タイトル#' + this._nodeCounter));
+        const newRow = document.createElement('li');
+        newRow.appendChild(rowTitle);
+        return newRow;
+    }
+
+    _getChildListNode(row) {
+        for (let node of row.childNodes) {
+            if (node.nodeName.toUpperCase() === 'UL') return node;
+        }
+        return null;
+    }
+
+    operateList(operation, li) {
+        if (operation in this._list_func) {
+            this._list_func[operation](li);
+        } else {
+            console.error(operation + ' is not support.');
+        }
+    }
+}
+
+_listNode =  new LNT01_List_Node(document.getElementById('list01'));
+
+document.getElementById('list01').addEventListener('click', (event) => {
+    // console.log(event.target);
+    const operation = document.forms.listOperation['list-operation'].value;
+        if (operation !== 'nop') {
+            setTimeout(function() {
+                // console.log(operation);
+                // event.target = p tag
+                // event.target.parentNode = li tag
+                // _list_func[operation](event.target.parentNode);
+                _listNode.operateList(operation, event.target.parentNode);
+            }, 0);
+        }
+    });
+        </script>
+    </body>
+</html>
