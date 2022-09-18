@@ -96,6 +96,18 @@ class LNT01_List_Node {
             }
             childListNode.appendChild(self._makeNewNode());
         };
+        this._list_func.toggledisplay = function(row) {
+            let childListNode = self._getChildListNode(row);
+            if (childListNode) {
+                if (!childListNode.style.display || (childListNode.style.display === 'block')) {
+                    row.firstChild.classList.add('child-close-title');
+                    childListNode.style.display = 'none';
+                } else {
+                    row.firstChild.classList.remove('child-close-title');
+                    childListNode.style.display = '';
+                }
+            }
+        }
         this._list_func.deleterow = function(row) {
             const ret = confirm('「' + self._getTitle(row) + '」を削除します.');
             if (!ret) return;
@@ -145,8 +157,8 @@ class LNT01_List_Node {
 }
 
 _listNode =  new LNT01_List_Node(document.getElementById('list01'));
-
-document.getElementById('list01').addEventListener('click', (event) => {
+_eventName = (typeof window.ontouchend === "undefined") ? 'click': 'touchend';
+document.getElementById('list01').addEventListener(_eventName, (event) => {
     // console.log(event.target);
     const operation = document.forms.listOperation['list-operation'].value;
         if (operation !== 'nop') {
@@ -154,7 +166,6 @@ document.getElementById('list01').addEventListener('click', (event) => {
                 // console.log(operation);
                 // event.target = p tag
                 // event.target.parentNode = li tag
-                // _list_func[operation](event.target.parentNode);
                 _listNode.operateList(operation, event.target.parentNode);
             }, 0);
         }

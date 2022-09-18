@@ -22,6 +22,20 @@ body {
     border-radius: 5px;
 }
 
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"]:checked + label, 
+label:hover {
+    background-color: chocolate;
+    color: azure;
+}
+
+#list01 .child-close-title {
+    text-decoration: underline;
+}
+
 #list01 li {
     list-style: none;
     padding-left: 1rem;
