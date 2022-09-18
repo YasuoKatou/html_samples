@@ -109,7 +109,8 @@ class LNT01_List_Node {
             }
         }
         this._list_func.deleterow = function(row) {
-            const ret = confirm('「' + self._getTitle(row) + '」を削除します.');
+            let childListNode = (self._getChildListNode(row)) ? ' （下位レベルも削除）': '';
+            const ret = confirm('「' + self._getTitle(row) + '」を削除します.' + childListNode);
             if (!ret) return;
             const ul = self._getListRoot(row, 'ul');
             ul.removeChild(row);
@@ -128,7 +129,7 @@ class LNT01_List_Node {
     }
 
     _getTitle(target) {
-        return target.firstChild.textContent;
+        return target.firstChild.innerText;
     }
 
     _makeNewNode() {
