@@ -22,6 +22,7 @@
     flex-direction: row;
     text-align: center;
     font-weight: bold;
+    overflow: hidden;
 }
 
 .HSL01-table-fixed-side > div > div:last-child {
@@ -35,21 +36,21 @@
     overflow: auto;
 }
 
+#HSL01-table-fixed-side-contents {
+    flex: 1;
+}
+
+#HSL01-table-fixed-side-contents li {
+    list-style: none;
+}
+
 #HSL01-table-variable-contents-body p,
-#HSL01-table-fixed-side-contents ul {
+#HSL01-table-fixed-side-contents li > div {
     height: 1.5rem;
 }
 
-.HSL01-table-fixed-side > div > div:nth-child(3) > ul p,
-#HSL01-table-fixed-side-contents ul:not(:last-child) p {
-    height: 100%;
-    border-style: solid none none solid;
-    box-sizing: border-box;
-    border-width: 1px;
-    border-color: var(--HSL01-TABLE-GRID-COLOR);
-}
-
-#HSL01-table-fixed-side-contents ul:last-child p {
+.HSL01-table-fixed-side > div > div:nth-child(3) > ul p /*,
+#HSL01-table-fixed-side-contents li:not(:last-child) p*/ {
     height: 100%;
     border-style: solid none solid solid;
     box-sizing: border-box;
@@ -57,34 +58,42 @@
     border-color: var(--HSL01-TABLE-GRID-COLOR);
 }
 
+#HSL01-table-fixed-side-contents li:last-child p {
+/*
+    border-style: solid none solid solid;
+    box-sizing: border-box;
+    border-width: 1px;
+    border-color: var(--HSL01-TABLE-GRID-COLOR);
+*/
+}
+
 .HSL01-table-fixed-side > div > div:nth-child(3) > ul > li:nth-child(1),
-#HSL01-table-fixed-side-contents > ul > li:nth-child(1) {
+#HSL01-table-fixed-side-contents li > div > p:nth-child(1) {
     width: var(--HSL01-TABLE-COLUMN-WIDTH-NO);
 }
 
 .HSL01-table-fixed-side > div > div:nth-child(3) > ul > li:nth-child(2),
-#HSL01-table-fixed-side-contents > ul > li:nth-child(2) {
+#HSL01-table-fixed-side-contents li > div > p:nth-child(2) {
     width: var(--HSL01-TABLE-COLUMN-WIDTH-TITLE);
 }
 
 .HSL01-table-fixed-side > div > div:nth-child(3) > ul > li:nth-child(3),
-#HSL01-table-fixed-side-contents > ul > li:nth-child(3) {
+#HSL01-table-fixed-side-contents li > div > p:nth-child(3) {
     width: var(--HSL01-TABLE-COLUMN-WIDTH-HANDLER);
 }
 
 .HSL01-table-fixed-side > div > div:nth-child(3) > ul > li:nth-child(4),
-#HSL01-table-fixed-side-contents > ul > li:nth-child(4) {
+#HSL01-table-fixed-side-contents li > div > p:nth-child(4) {
     width: var(--HSL01-TABLE-COLUMN-WIDTH-COST);
 }
 
-#HSL01-table-fixed-side-contents > ul > li:nth-child(4) {
+#HSL01-table-fixed-side-contents li > div > p:nth-child(4) {
     text-align: right;
 }
 
-#HSL01-table-fixed-side-contents > ul {
+#HSL01-table-fixed-side-contents li > div {
     display: flex;
     flex-direction: row;
-    list-style: none;
     background-color: lightcyan;
 }
 
@@ -122,24 +131,31 @@
  */
 #HSL01-table-variable-contents-header > div > div:first-child > p {
     text-align: center;
-
+/*
     box-sizing: border-box;
     border-width: 2px;
     border-color: var(--HSL01-TABLE-GRID-COLOR);
+*/
 }
 
 /**
  * ヘッダー #1 の最終月以外
  */
 #HSL01-table-variable-contents-header > div:not(:last-child) > div:nth-child(1) > p {
-    border-style: solid none none solid;
+    box-sizing: border-box;
+    border-style: solid none solid solid;
+    border-width: 1px;
+    border-color: var(--HSL01-TABLE-GRID-COLOR);
 }
 
 /**
  * ヘッダー #1 の最終月
  */
 #HSL01-table-variable-contents-header > div:last-child > div:nth-child(1) > p {
-    border-style: solid solid none solid;
+    box-sizing: border-box;
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--HSL01-TABLE-GRID-COLOR);
 }
 
 /**
@@ -159,24 +175,32 @@
 }
 
 /**
- * ヘッダー #2 の初日（１日）
+ * ヘッダー #2, #3 の最終月以外
+ * または、ヘッダー #2, #3 の最終月の最終日以外
+ * または、カレンダー項目（左下区画全て）
+ * または、カレンダー内容（右下区画）の最終月以外
+ * または、カレンダー内容（右下区画）の最終月で最終日以外
  */
-#HSL01-table-variable-contents-header > div > div:nth-child(2) > p:first-child {
-    border-style: solid none solid solid;
+#HSL01-table-variable-contents-header > div:not(:last-child) > div:not(:first-child) > p,
+#HSL01-table-variable-contents-header > div:last-child > div:not(:first-child) > p:not(:last-child),
+#HSL01-table-fixed-side-contents p,
+#HSL01-table-variable-contents-body > div > div:not(:last-child) > p,
+#HSL01-table-variable-contents-body > div > div:last-child > p:not(:last-child) {
+    border-style: none none solid solid;
     box-sizing: border-box;
-    border-width: 1px 0px 1px 2px;
+    border-width: 0px 0px 1px 1px;
     border-color: var(--HSL01-TABLE-GRID-COLOR);
 }
 
 /**
- * ヘッダー #2 の２日～末日前日
- * または、ヘッダー #2 の最終月以外の末日
+ * ヘッダー #2, #3 の最終月で最終日
+ * または、カレンダー内容（右下区画）の最終月で最終日
  */
-#HSL01-table-variable-contents-header > div > div:nth-child(2) > p:not(:first-child):not(:last-child),
-#HSL01-table-variable-contents-header > div:not(:last-child) > div:nth-child(2) > p:last-child  {
-    border-style: solid none solid solid;
+ #HSL01-table-variable-contents-header > div:last-child > div:not(:first-child) > p:last-child,
+ #HSL01-table-variable-contents-body > div > div:last-child > p:last-child {
+    border-style: none solid solid solid;
     box-sizing: border-box;
-    border-width: 1px 0px 1px 1px;
+    border-width: 0px 1px 1px 1px;
     border-color: var(--HSL01-TABLE-GRID-COLOR);
 }
 
@@ -184,20 +208,24 @@
  * ヘッダー #2 の最終月の末日
  */
 #HSL01-table-variable-contents-header > div:last-child > div:nth-child(2) > p:last-child  {
+/*
     border-style: solid solid solid solid;
     box-sizing: border-box;
     border-width: 1px 2px 1px 1px;
     border-color: var(--HSL01-TABLE-GRID-COLOR);
+*/
 }
 
 /**
  * ヘッダー #3 の初日（１日）
  */
 #HSL01-table-variable-contents-header > div > div:nth-child(3) > p:first-child {
+/*
     border-style: none none solid solid;
     box-sizing: border-box;
     border-width: 0px 0px 1px 2px;
     border-color: var(--HSL01-TABLE-GRID-COLOR);
+*/
 }
 
 /**
@@ -206,20 +234,24 @@
  */
 #HSL01-table-variable-contents-header > div > div:nth-child(3) > p:not(:first-child):not(:last-child),
 #HSL01-table-variable-contents-header > div:not(:last-child) > div:nth-child(3) > p:last-child  {
-     border-style: none none solid solid;
+/*
+    border-style: none none solid solid;
      box-sizing: border-box;
      border-width: 1px;
      border-color: var(--HSL01-TABLE-GRID-COLOR);
+*/
 }
 
 /**
  * ヘッダー #3 の最終月の末日
  */
 #HSL01-table-variable-contents-header > div:last-child > div:nth-child(3) > p:last-child  {
+/*
     border-style: none solid solid solid;
     box-sizing: border-box;
     border-width: 0px 2px 1px 1px;
     border-color: var(--HSL01-TABLE-GRID-COLOR);
+*/
 }
 
 #HSL01-table-variable-contents-body > div {
@@ -239,10 +271,12 @@
 #HSL01-table-variable-contents-body > div:not(:last-child) > div:not(:last-child) > p:first-child,
 #HSL01-table-variable-contents-body > div:not(:last-child) > div:last-child > p:first-child {
     width: var(--HSL01-TABLE-COLUMN-WIDTH-DATE);
+/*
     border-style: solid none none solid;
     box-sizing: border-box;
     border-width: 1px 0px 0px 2px;
     border-color: var(--HSL01-TABLE-GRID-COLOR);
+*/
 }
 
 /**
@@ -252,10 +286,12 @@
 #HSL01-table-variable-contents-body > div:last-child > div:not(:last-child) > p:first-child,
 #HSL01-table-variable-contents-body > div:last-child > div:last-child > p:first-child {
     width: var(--HSL01-TABLE-COLUMN-WIDTH-DATE);
+/*
     border-style: solid none solid solid;
     box-sizing: border-box;
     border-width: 1px 0px 1px 2px;
     border-color: var(--HSL01-TABLE-GRID-COLOR);
+*/
 }
 
 /**
@@ -265,10 +301,12 @@
 #HSL01-table-variable-contents-body > div:not(:last-child) > div:not(:last-child) > p:not(:first-child),
 #HSL01-table-variable-contents-body > div:not(:last-child) > div:last-child > p:not(:first-child):not(:last-child) {
     width: var(--HSL01-TABLE-COLUMN-WIDTH-DATE);
+/*
     border-style: solid none none solid;
     box-sizing: border-box;
     border-width: 1px;
     border-color: var(--HSL01-TABLE-GRID-COLOR);
+*/
 }
 
 /**
@@ -276,11 +314,13 @@
  */
  #HSL01-table-variable-contents-body > div:not(:last-child) > div:last-child > p:last-child {
      width: var(--HSL01-TABLE-COLUMN-WIDTH-DATE);
+/*
      border-style: solid solid none solid;
      box-sizing: border-box;
      border-width: 1px 2px 0px 1px;
      border-color: var(--HSL01-TABLE-GRID-COLOR);
- }
+*/
+}
 
 /**
  * 最終月以外、最終行、2日目以降
@@ -289,10 +329,12 @@
 #HSL01-table-variable-contents-body > div:last-child > div:not(:last-child) > p:not(:first-child),
 #HSL01-table-variable-contents-body > div:last-child > div:last-child > p:not(:first-child):not(:last-child) {
     width: var(--HSL01-TABLE-COLUMN-WIDTH-DATE);
+/*
     border-style: solid none solid solid;
     box-sizing: border-box;
     border-width: 1px;
     border-color: var(--HSL01-TABLE-GRID-COLOR);
+*/
 }
 
 /**
@@ -300,10 +342,12 @@
  */
  #HSL01-table-variable-contents-body > div:last-child > div:last-child > p:last-child {
      width: var(--HSL01-TABLE-COLUMN-WIDTH-DATE);
+/*
      border-style: solid solid solid solid;
      box-sizing: border-box;
      border-width: 1px 2px 1px 1px;
      border-color: var(--HSL01-TABLE-GRID-COLOR);
+*/
 }
 
 .HSL01-public-holiday > p {

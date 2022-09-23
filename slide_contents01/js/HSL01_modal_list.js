@@ -4,7 +4,15 @@ class HSL01_Modal_List extends HSL01_Modal {
 
     constructor(tagId) {
         super(tagId);
+
         this._listItemClickFunction = this._getListItemClickFunction();
+        let tags = this._modalTag.getElementsByTagName('ul');
+        if (tags.length !== 1) {
+            alert('not found unique list body (ul tag)');
+            return;
+        }
+        this._list = tags[0];
+        this._list.addEventListener(this._clickEventName, this._listItemClickFunction);
     }
 
     /**
@@ -12,22 +20,17 @@ class HSL01_Modal_List extends HSL01_Modal {
      */
     set listItems(param) {
         try {
-            let tags = this._modalTag.getElementsByTagName('ul');
-            if (tags.length !== 1) throw 'not found unique list body (ul tag)';
-            this._list = tags[0];
-
             // remove current list
             while(this._list.firstChild) {
                 this._list.removeChild(this._list.firstChild);
             }
             // dialog header
-            tags = this._modalTag.getElementsByTagName('h3');
+            let tags = this._modalTag.getElementsByTagName('h3');
             if (tags.length !== 1) throw 'not found header tag)';
             tags[0].innerText = param['header'] ? param['header'] : '';
             // set param's item
             for (let item of param['list-items']) {
                 var li = document.createElement('li');
-                li.addEventListener('click', this._listItemClickFunction);
                 var p = document.createElement('p');
                 p.appendChild(document.createTextNode(item['title']));
                 p.dataset.operation = item['operation'];        // for event.target.dataset
@@ -42,9 +45,11 @@ class HSL01_Modal_List extends HSL01_Modal {
     /**
      * モーダルウィンドウを表示する.
      * @param {*} callBack コールバック関数
+     * @param {*} retOpt モーダルイベントで戻す値
      */
-    showModal(callBack) {
+    showModal(callBack, retOpt) {
         super._setCallBack(callBack);
+        this._retOpt = retOpt;
         this._modalTag.style.display = 'block';
     }
 
@@ -89,16 +94,7 @@ class HSL01_Modal_List extends HSL01_Modal {
      */
     closeModal() {
         super._removeEventListener();
-        this._removeEventListener();
+        this._list.removeEventListener(this._clickEventName, this._listItemClickFunction);
         this._modalTag.style.display = 'none';
-    }
-
-    /**
-     * 選択一覧に表示したクリックイベントを削除する.
-     */
-    _removeEventListener() {
-        for(let li of this._list.getElementsByTagName('li')) {
-            li.removeEventListener('click', this._listItemClickFunction);
-        }
     }
 }

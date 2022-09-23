@@ -5,17 +5,13 @@ class HSL01_Working_Calender {
     _varContBody = null;
     _calenderData = null;
     _holidays = [];
+    _listNodeOpe = null;
 
     init_calender() {
         this._initPage(true);
         this._getHolidays();
 
-        let tag = document.getElementById('HSL01-calender-set');
-        if (tag) {
-            tag.addEventListener('click', this._getCalenderChangeFunction());
-        } else {
-            alert('HSL01-calender-set id not found !');
-        }
+        this._setEventListners();
         //TODO カレンダーパーツのスクロール連動を実装中
     //     tag = document.getElementById('HSL01-table-variable-contents-body');
     //     if (tag) {
@@ -23,6 +19,23 @@ class HSL01_Working_Calender {
     //     } else {
     //         alert('HSL01-calender-set id not found !');
     //     }
+    }
+
+    _setEventListners() {
+        try {
+            const clickEentName = (typeof window.ontouchend === "undefined") ? 'click': 'touchend';
+
+            let tag = document.getElementById('HSL01-calender-set');
+            if (!tag) throw 'HSL01-calender-set id not found !';
+            tag.addEventListener(clickEentName, this._getCalenderChangeFunction());
+
+            tag = document.getElementById('HSL01-table-fixed-side-contents');
+            if (!tag) throw 'HSL01-table-fixed-side-contents id not found !';
+            tag.addEventListener(clickEentName, this._getCalenderItemOperationFunction());
+            this._listNodeOpe = new HLS01_List_Node_Ex(tag, this);
+        } catch (ex) {
+            alert('HSL01_Working_Calender._setEventListners : ' + ex);
+        }
     }
 
     _getCalenderChangeFunction() {
@@ -84,20 +97,13 @@ class HSL01_Working_Calender {
     }
 
     _init_table_contents() {
-        const clickEventListener = this._getCalenderItemOperationFunction()
         try {
             let workItemList = this._init_getWorkItems();
             if (workItemList.length < 1) return;
             // console.log(workItemList);
-            let no = 1;
+            let no = 0;
             for (const item of workItemList) {
-                let ul = document.createElement('ul');
-                ul.appendChild(this._table_contents_title(no++));
-                ul.appendChild(this._table_contents_title(item));
-                ul.appendChild(this._table_contents_title(''));
-                ul.appendChild(this._table_contents_title(''));
-                ul.addEventListener('click', clickEventListener);
-                this._sideFixedContent.appendChild(ul);
+                this._sideFixedContent.appendChild(this._table_contents_title(++no, item));
 
                 this._appendCalenderTag();
             }
@@ -118,37 +124,52 @@ class HSL01_Working_Calender {
     _calenderItemMenu = {
         'header': 'カレンダー項目の操作を選択',
         'list-items': [
-            {'title': '上に移動', 'operation': 'moveup'},
-            {'title': '下に移動', 'operation': 'movedown'},
-            {'title': '削除', 'operation': 'delete'}
+            {'title': '先頭に移動', 'operation': 'movetop'},
+            {'title': '一つ上に移動', 'operation': 'moveup'},
+            {'title': '一つ下に移動', 'operation': 'movedown'},
+            {'title': '末尾に移動', 'operation': 'movebottom'},
+            {'title': '同レベルに追加', 'operation': 'add1'},
+            {'title': '下位レベルに追加', 'operation': 'add2'},
+            {'title': '下位レベルの表示／非表示', 'operation': 'toggledisplay'},
+            {'title': '削除', 'operation': 'deleterow'}
         ]
     };
     _getCalenderItemOperationEvent(event) {
         //console.log('_getCalenderItemOperationEvent');
         const modal = new HSL01_Modal_List('HSL01-modal-list');
         modal.listItems = this._calenderItemMenu;
-        modal.showModal(this._getListItemClickFunction());
+        modal.showModal(this._getListItemClickFunction(), event.target.parentElement.parentElement);
     }
 
     _getListItemClickFunction() {
         let self = this;
-        return function(modal, operation) {
+        return function(modal, operation, retOpt) {
+            modal.closeModal();
             setTimeout(function() {
-                self._doCalenderItem(modal, operation);
-            }, 0);
+                self._doCalenderItem(operation, retOpt);
+            }, 100);    // 100ms : modal window close
         }
     }
-    _doCalenderItem(modal, operation) {
-        modal.closeModal();
-        // TODO 以下に、operation に対する処理を実装する
-        console.log('_doCalenderItem : ' + operation);
+    _doCalenderItem(operation, retOpt) {
+        // console.log('_doCalenderItem : ' + operation);
+        this._listNodeOpe.operateList(operation, retOpt);   // retOpt = li tag
+        // TODO カレンダー右下区画も　operation に連動する.
     }
 
-    _table_contents_title(data) {
+    _makeCalenderRowItem(data) {
         let p = document.createElement('p');
         p.appendChild(document.createTextNode(data));
-        let li = document.createElement('li');
-        li.appendChild(p);
+        return p;
+    }
+
+    _table_contents_title(no, title) {
+        const div = document.createElement('div');
+        div.appendChild(this._makeCalenderRowItem(no++));
+        div.appendChild(this._makeCalenderRowItem(title));
+        div.appendChild(this._makeCalenderRowItem(''));
+        div.appendChild(this._makeCalenderRowItem(''));
+        const li = document.createElement('li');
+        li.appendChild(div);
         return li;
     }
 
