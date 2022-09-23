@@ -89,7 +89,6 @@ class HSL01_Working_Calender {
         }
     }
 
-
     _removeFirstChild(rootTag) {
         while (rootTag.firstChild) {
             rootTag.removeChild(rootTag.firstChild);
@@ -269,7 +268,7 @@ class HSL01_Working_Calender {
      */
      _appendCalenderTag() {
         try {
-            const row = document.createElement('div');
+            const rowItems = document.createElement('div');
             for (let month of this._calenderData) {
                 let monthTag = document.createElement('div');
                 let thisYear = month['startDate'].getFullYear();
@@ -286,8 +285,10 @@ class HSL01_Working_Calender {
                     ++todayDay;
                     if (++dayOfWeek > 6) dayOfWeek = 0;
                 }
-                row.appendChild(monthTag);
+                rowItems.appendChild(monthTag);
             }
+            const row = document.createElement('li');
+            row.appendChild(rowItems);
             this._varContBody.appendChild(row);
         } catch (ex) {
             alert('error at _appendCalenderTag : ' + ex);
