@@ -2,6 +2,7 @@ class List_Node_01 {
     _list_func = {};
     _listRootNode = null;
     _nodeCounter = 0;
+    _deleteRowConf = true;
     constructor(listRootNode) {
         this._listRootNode = listRootNode;
         this._nodeCounter = listRootNode.children.length;
@@ -63,9 +64,11 @@ class List_Node_01 {
             }
         }
         this._list_func.deleterow = function(row) {
-            let childListNode = (self._getChildListNode(row)) ? ' （下位レベルも削除）': '';
-            const ret = confirm('「' + self._getTitle(row) + '」を削除します.' + childListNode);
-            if (!ret) return;
+            if (self._deleteRowConf) {
+                let childListNode = (self._getChildListNode(row)) ? ' （下位レベルも削除）': '';
+                const ret = confirm('「' + self._getTitle(row) + '」を削除します.' + childListNode);
+                if (!ret) return;
+            }
             const ul = self._getListRoot(row, 'ul');
             ul.removeChild(row);
         }

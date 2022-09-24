@@ -25,7 +25,7 @@ class HLS01_List_Node_Ex extends List_Node_01 {
 
     /**
      * ノードポジションを取得する.
-     * @param {li} liTag 
+     * @param {li} liTag 起点となるliタグ
      * @returns ノードポジション配列
      */
     getNodePosition(liTag) {
@@ -88,6 +88,10 @@ class HLS01_Row_Item_Node_Ex extends HLS01_List_Node_Ex {
  * カレンダー詳細（右下区画）のノードを操作するクラス.
  */
  class HLS01_Row_Detail_Node_Ex extends HLS01_List_Node_Ex {
+    constructor(list_root, ownerClass) {
+        super(list_root, ownerClass);
+        this._deleteRowConf = false;    // 削除確認を行わない
+    }
 
     /**
      * 新規行を生成する.
