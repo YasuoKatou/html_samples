@@ -41,7 +41,7 @@
 }
 
 #HSL01-table-fixed-side-contents {
-    flex: 1;
+    overflow: hidden;
 }
 
 #HSL01-table-fixed-side-contents li {

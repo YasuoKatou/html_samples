@@ -133,7 +133,11 @@ class HSL01_Working_Calender {
             {'title': '一つ下に移動', 'operation': 'movedown'},
             {'title': '末尾に移動', 'operation': 'movebottom'},
             {'title': '同レベルに追加', 'operation': 'add1'},
+            {'title': '同レベルに追加（５行）', 'operation': 'add1-5'},
+            {'title': '同レベルに追加（10行）', 'operation': 'add1-10'},
             {'title': '下位レベルに追加', 'operation': 'add2'},
+            {'title': '下位レベルに追加（５行）', 'operation': 'add2-5'},
+            {'title': '下位レベルに追加（10行）', 'operation': 'add2-10'},
             {'title': '下位レベルの表示／非表示', 'operation': 'toggledisplay'},
             {'title': '削除', 'operation': 'deleterow'}
         ]
@@ -163,10 +167,21 @@ class HSL01_Working_Calender {
         }
     }
     _doCalenderItem(operation, retOpt) {
-        // カレンダー項目（左下区画）の操作
-        this._itemNodeOpe.operateList(operation, retOpt['row']);
-        // カレンダー詳細（右下区画）も　operation に連動する.
-        this._detailNodeOpe.operateList(operation, retOpt['positions'])
+        let rows = 1;
+        let ope = operation;
+        if ((ope === 'add1-5') || (ope === 'add2-5')){
+            ope = operation.split('-')[0];
+            rows = 5;
+        } else if ((ope === 'add1-10') || (ope === 'add2-10')) {
+            ope = operation.split('-')[0];
+            rows = 10;
+        }
+        for (let count = 0; count < rows; ++count) {
+            // カレンダー項目（左下区画）の操作
+            this._itemNodeOpe.operateList(ope, retOpt['row']);
+            // カレンダー詳細（右下区画）も　operation に連動する.
+            this._detailNodeOpe.operateList(ope, retOpt['positions'])
+        }
     }
 
     _makeCalenderRowItem(data, leftPadding = null) {
