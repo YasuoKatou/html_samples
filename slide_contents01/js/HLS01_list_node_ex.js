@@ -93,6 +93,22 @@ class HLS01_Row_Item_Node_Ex extends HLS01_List_Node_Ex {
      * 新規行を生成する.
      * @override
      */
-     _makeNewNode() {
+    _makeNewNode() {
+        return this._ownerClass.makeCalenderDetail();
+    }
+
+    _getLibyPositions(positions) {
+        let pos = positions.length - 1;
+        let li = this._listRootNode.childNodes[positions[pos--]];
+        while (pos >= 0) {
+            let ul = li.lastChild;
+            li = ul.childNodes[positions[pos--]];
+        }
+        return li;
+    }
+
+    operateList(operation, positions) {
+        let li = this._getLibyPositions(positions);
+        super.operateList(operation, li);
     }
 }

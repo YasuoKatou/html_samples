@@ -158,14 +158,15 @@ class HSL01_Working_Calender {
         return function(modal, operation, retOpt) {
             modal.closeModal();
             setTimeout(function() {
-                self._doCalenderItem(operation, retOpt['row']);
+                self._doCalenderItem(operation, retOpt);
             }, 100);    // 100ms : modal window close
         }
     }
-    _doCalenderItem(operation, liTag) {
-        // console.log('_doCalenderItem : ' + operation);
-        this._itemNodeOpe.operateList(operation, liTag);
-        // TODO カレンダー右下区画も　operation に連動する.
+    _doCalenderItem(operation, retOpt) {
+        // カレンダー項目（左下区画）の操作
+        this._itemNodeOpe.operateList(operation, retOpt['row']);
+        // カレンダー詳細（右下区画）も　operation に連動する.
+        this._detailNodeOpe.operateList(operation, retOpt['positions'])
     }
 
     _makeCalenderRowItem(data, leftPadding = null) {
@@ -279,33 +280,36 @@ class HSL01_Working_Calender {
         }
     }
 
+    makeCalenderDetail() {
+        const rowItems = document.createElement('div');
+        for (let month of this._calenderData) {
+            let monthTag = document.createElement('div');
+            let thisYear = month['startDate'].getFullYear();
+            let thisMonth = month['startDate'].getMonth();
+            let todayDay = month['startDate'].getDate();
+            let dayOfWeek = month['startDate'].getDay();
+            for (let dayCount = 0; dayCount < month['days']; ++dayCount) {
+                let p = document.createElement('p');
+                p.appendChild(document.createTextNode(''));
+                if (this._isHoliday(thisYear, thisMonth, todayDay, dayOfWeek)) {
+                    p.classList.add('HSL01-horiday');
+                }
+                monthTag.appendChild(p);
+                ++todayDay;
+                if (++dayOfWeek > 6) dayOfWeek = 0;
+            }
+            rowItems.appendChild(monthTag);
+        }
+        const row = document.createElement('li');
+        row.appendChild(rowItems);
+        return row;
+    }
     /**
-     * カレンダーコンテンツの行を追加する.
+     * カレンダー詳細（右下区画）の行を追加する.
      */
      _appendCalenderTag() {
         try {
-            const rowItems = document.createElement('div');
-            for (let month of this._calenderData) {
-                let monthTag = document.createElement('div');
-                let thisYear = month['startDate'].getFullYear();
-                let thisMonth = month['startDate'].getMonth();
-                let todayDay = month['startDate'].getDate();
-                let dayOfWeek = month['startDate'].getDay();
-                for (let dayCount = 0; dayCount < month['days']; ++dayCount) {
-                    let p = document.createElement('p');
-                    p.appendChild(document.createTextNode(''));
-                    if (this._isHoliday(thisYear, thisMonth, todayDay, dayOfWeek)) {
-                        p.classList.add('HSL01-horiday');
-                    }
-                    monthTag.appendChild(p);
-                    ++todayDay;
-                    if (++dayOfWeek > 6) dayOfWeek = 0;
-                }
-                rowItems.appendChild(monthTag);
-            }
-            const row = document.createElement('li');
-            row.appendChild(rowItems);
-            this._varContBody.appendChild(row);
+            this._varContBody.appendChild(this.makeCalenderDetail());
         } catch (ex) {
             alert('error at _appendCalenderTag : ' + ex);
         }

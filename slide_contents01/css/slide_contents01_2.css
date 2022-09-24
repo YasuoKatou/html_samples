@@ -36,7 +36,7 @@
     overflow-y: hidden;
 }
 
-#HSL01-table-variable-contents-body > li {
+#HSL01-table-variable-contents-body li {
     flex: 1;
 }
 
@@ -173,8 +173,8 @@
 #HSL01-table-variable-contents-header > div:not(:last-child) > div:not(:first-child) > p,
 #HSL01-table-variable-contents-header > div:last-child > div:not(:first-child) > p:not(:last-child),
 #HSL01-table-fixed-side-contents p,
-#HSL01-table-variable-contents-body > li > div > div:not(:last-child) > p,
-#HSL01-table-variable-contents-body > li > div > div:last-child > p:not(:last-child) {
+#HSL01-table-variable-contents-body li > div > div:not(:last-child) > p,
+#HSL01-table-variable-contents-body li > div > div:last-child > p:not(:last-child) {
     border-style: none none solid solid;
     box-sizing: border-box;
     border-width: 0px 0px 1px 1px;
@@ -186,19 +186,14 @@
  * または、カレンダー内容（右下区画）の最終月で最終日
  */
  #HSL01-table-variable-contents-header > div:last-child > div:not(:first-child) > p:last-child,
- #HSL01-table-variable-contents-body > li > div > div:last-child > p:last-child {
+ #HSL01-table-variable-contents-body li > div > div:last-child > p:last-child {
     border-style: none solid solid solid;
     box-sizing: border-box;
     border-width: 0px 1px 1px 1px;
     border-color: var(--HSL01-TABLE-GRID-COLOR);
 }
 
-#HSL01-table-variable-contents-body > li > div {
-    display: flex;
-    flex-direction: row;
-}
-
-#HSL01-table-variable-contents-body > li > div > div {
+#HSL01-table-variable-contents-body div {
     display: flex;
     flex-direction: row;
 }
@@ -207,8 +202,8 @@
  * 最終月以外、最終行以外、左端
  * 最終月、最終行以外、左端
  */
-#HSL01-table-variable-contents-body > li > div:not(:last-child) > div:not(:last-child) > p:first-child,
-#HSL01-table-variable-contents-body > div:not(:last-child) > div:last-child > p:first-child {
+#HSL01-table-variable-contents-body li > div:not(:last-child) > div:not(:last-child) > p:first-child,
+#HSL01-table-variable-contents-body li > div:not(:last-child) > div:last-child > p:first-child {
     width: var(--HSL01-TABLE-COLUMN-WIDTH-DATE);
 }
 
@@ -216,8 +211,8 @@
  * 最終月以外、最終行、左端
  * 最終月、最終行、左端
  */
-#HSL01-table-variable-contents-body > li > div:last-child > div:not(:last-child) > p:first-child,
-#HSL01-table-variable-contents-body > li > div:last-child > div:last-child > p:first-child {
+#HSL01-table-variable-contents-body li > div:last-child > div:not(:last-child) > p:first-child,
+#HSL01-table-variable-contents-body li > div:last-child > div:last-child > p:first-child {
     width: var(--HSL01-TABLE-COLUMN-WIDTH-DATE);
 }
 
@@ -225,15 +220,15 @@
  * 最終月以外、最終行以外、2日目以降
  * 最終月、最終行以外、2日目～末日前日
  */
-#HSL01-table-variable-contents-body > li > div:not(:last-child) > div:not(:last-child) > p:not(:first-child),
-#HSL01-table-variable-contents-body > li > div:not(:last-child) > div:last-child > p:not(:first-child):not(:last-child) {
+#HSL01-table-variable-contents-body li > div:not(:last-child) > div:not(:last-child) > p:not(:first-child),
+#HSL01-table-variable-contents-body li > div:not(:last-child) > div:last-child > p:not(:first-child):not(:last-child) {
     width: var(--HSL01-TABLE-COLUMN-WIDTH-DATE);
 }
 
 /**
  * 最終月、最終行以外、末日
  */
- #HSL01-table-variable-contents-body > li > div:not(:last-child) > div:last-child > p:last-child {
+ #HSL01-table-variable-contents-body li > div:not(:last-child) > div:last-child > p:last-child {
      width: var(--HSL01-TABLE-COLUMN-WIDTH-DATE);
 }
 
@@ -241,15 +236,15 @@
  * 最終月以外、最終行、2日目以降
  * 最終月、最終行、2日目～末日前日
  */
-#HSL01-table-variable-contents-body > li > div:last-child > div:not(:last-child) > p:not(:first-child),
-#HSL01-table-variable-contents-body > li > div:last-child > div:last-child > p:not(:first-child):not(:last-child) {
+#HSL01-table-variable-contents-body li > div:last-child > div:not(:last-child) > p:not(:first-child),
+#HSL01-table-variable-contents-body li > div:last-child > div:last-child > p:not(:first-child):not(:last-child) {
     width: var(--HSL01-TABLE-COLUMN-WIDTH-DATE);
 }
 
 /**
  * 最終月、最終行、末日
  */
- #HSL01-table-variable-contents-body > li > div:last-child > div:last-child > p:last-child {
+ #HSL01-table-variable-contents-body li > div:last-child > div:last-child > p:last-child {
      width: var(--HSL01-TABLE-COLUMN-WIDTH-DATE);
 }
 
