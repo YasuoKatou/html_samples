@@ -86,6 +86,10 @@ class List_Node_01 {
         return target.firstChild.innerText;
     }
 
+    /**
+     * １行のコンテンツを生成する.このメソッドは、オーバーライドする必要がある.
+     * @returns コンテンツ
+     */
     _makeNewNode() {
         const rowTitle = document.createElement('p');
         ++this._nodeCounter;
@@ -102,8 +106,16 @@ class List_Node_01 {
         return null;
     }
 
+    /**
+     * 一覧操作を行う前準備を行う.このメソッドは、必要に応じてオーバーライドする必要がある.
+     * @param {string} operation 一覧操作文字列
+     * @param {li} li 起点となるliノード
+     */
+    _prepareOperateList(operation, li) {}
+
     operateList(operation, li) {
         if (operation in this._list_func) {
+            this._prepareOperateList(operation, li);
             this._list_func[operation](li);
         } else {
             console.error(operation + ' is not support.');

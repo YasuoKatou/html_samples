@@ -5,7 +5,8 @@ class HSL01_Working_Calender {
     _varContBody = null;
     _calenderData = null;
     _holidays = [];
-    _listNodeOpe = null;
+    _itemNodeOpe = null;
+    _detailNodeOpe = null;
 
     init_calender() {
         this._initPage(true);
@@ -29,10 +30,14 @@ class HSL01_Working_Calender {
             if (!tag) throw 'HSL01-calender-set id not found !';
             tag.addEventListener(clickEentName, this._getCalenderChangeFunction());
 
-            tag = document.getElementById('HSL01-table-fixed-side-contents');
-            if (!tag) throw 'HSL01-table-fixed-side-contents id not found !';
-            tag.addEventListener(clickEentName, this._getCalenderItemOperationFunction());
-            this._listNodeOpe = new HLS01_List_Node_Ex(tag, this);
+            const tag1 = document.getElementById('HSL01-table-fixed-side-contents');
+            if (!tag1) throw 'HSL01-table-fixed-side-contents id not found !';
+            tag1.addEventListener(clickEentName, this._getCalenderItemOperationFunction());
+            this._itemNodeOpe = new HLS01_Row_Item_Node_Ex(tag1, this);
+
+            const tag2 = document.getElementById('HSL01-table-variable-contents-body');
+            if (!tag2) throw 'HSL01-table-variable-contents-body id not found !';
+            this._detailNodeOpe = new HLS01_Row_Detail_Node_Ex(tag2, this);
         } catch (ex) {
             alert('HSL01_Working_Calender._setEventListners : ' + ex);
         }
@@ -102,7 +107,7 @@ class HSL01_Working_Calender {
             // console.log(workItemList);
             let no = 0;
             for (const item of workItemList) {
-                this._sideFixedContent.appendChild(this._table_contents_title(++no, item));
+                this._sideFixedContent.appendChild(this.table_contents_title(++no, item));
 
                 this._appendCalenderTag();
             }
@@ -135,9 +140,17 @@ class HSL01_Working_Calender {
     };
     _getCalenderItemOperationEvent(event) {
         //console.log('_getCalenderItemOperationEvent');
+        const retOpt = this._editRowInfo(event.target.parentElement.parentElement);
         const modal = new HSL01_Modal_List('HSL01-modal-list');
         modal.listItems = this._calenderItemMenu;
-        modal.showModal(this._getListItemClickFunction(), event.target.parentElement.parentElement);
+        modal.showModal(this._getListItemClickFunction(), retOpt);
+    }
+
+    _editRowInfo(liTag) {
+        let info = {'row': liTag};
+        info['positions'] = this._itemNodeOpe.getNodePosition(liTag);
+        console.log(info);
+        return info;
     }
 
     _getListItemClickFunction() {
@@ -145,26 +158,29 @@ class HSL01_Working_Calender {
         return function(modal, operation, retOpt) {
             modal.closeModal();
             setTimeout(function() {
-                self._doCalenderItem(operation, retOpt);
+                self._doCalenderItem(operation, retOpt['row']);
             }, 100);    // 100ms : modal window close
         }
     }
-    _doCalenderItem(operation, retOpt) {
+    _doCalenderItem(operation, liTag) {
         // console.log('_doCalenderItem : ' + operation);
-        this._listNodeOpe.operateList(operation, retOpt);   // retOpt = li tag
+        this._itemNodeOpe.operateList(operation, liTag);
         // TODO カレンダー右下区画も　operation に連動する.
     }
 
-    _makeCalenderRowItem(data) {
+    _makeCalenderRowItem(data, leftPadding = null) {
         let p = document.createElement('p');
+        if (leftPadding && (leftPadding > 0)) {
+            p.style.paddingLeft = (leftPadding * 0.5) + 'rem';
+        }
         p.appendChild(document.createTextNode(data));
         return p;
     }
 
-    _table_contents_title(no, title) {
+    table_contents_title(no, title, leftPadding = null) {
         const div = document.createElement('div');
         div.appendChild(this._makeCalenderRowItem(no++));
-        div.appendChild(this._makeCalenderRowItem(title));
+        div.appendChild(this._makeCalenderRowItem(title, leftPadding));
         div.appendChild(this._makeCalenderRowItem(''));
         div.appendChild(this._makeCalenderRowItem(''));
         const li = document.createElement('li');
