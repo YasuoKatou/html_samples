@@ -32,8 +32,11 @@
 }
 
 #HSL01-table-variable-contents-body {
+    overflow: hidden;
+/* for debug
     overflow-x: auto;
     overflow-y: hidden;
+*/
 }
 
 #HSL01-table-variable-contents-body li {

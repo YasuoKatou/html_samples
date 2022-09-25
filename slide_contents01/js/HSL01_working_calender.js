@@ -7,19 +7,13 @@ class HSL01_Working_Calender {
     _holidays = [];
     _itemNodeOpe = null;
     _detailNodeOpe = null;
+    _calenderScroll = null;
 
     init_calender() {
         this._initPage(true);
         this._getHolidays();
 
         this._setEventListners();
-        //TODO カレンダーパーツのスクロール連動を実装中
-    //     tag = document.getElementById('HSL01-table-variable-contents-body');
-    //     if (tag) {
-    //         tag.addEventListener('scroll', this._getCalenderScrollFunction());
-    //     } else {
-    //         alert('HSL01-calender-set id not found !');
-    //     }
     }
 
     _setEventListners() {
@@ -38,6 +32,8 @@ class HSL01_Working_Calender {
             const tag2 = document.getElementById('HSL01-table-variable-contents-body');
             if (!tag2) throw 'HSL01-table-variable-contents-body id not found !';
             this._detailNodeOpe = new HLS01_Row_Detail_Node_Ex(tag2, this);
+
+            this._calenderScroll = new HSL01_Calender_Scroll();
         } catch (ex) {
             alert('HSL01_Working_Calender._setEventListners : ' + ex);
         }

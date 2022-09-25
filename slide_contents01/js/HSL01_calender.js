@@ -1,7 +1,7 @@
 /**
  * カレンダークラス
  */
- class HSL01_Calender {
+class HSL01_Calender {
     /**
      * 指定日付の月末日を取得する.
      * @param {Date} thisDate
