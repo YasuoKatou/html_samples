@@ -149,7 +149,7 @@ class HSL01_Working_Calender {
     _editRowInfo(liTag) {
         let info = {'row': liTag};
         info['positions'] = this._itemNodeOpe.getNodePosition(liTag);
-        console.log(info);
+        // console.log(info);
         return info;
     }
 

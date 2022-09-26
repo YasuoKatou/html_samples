@@ -266,3 +266,7 @@
 .HSL01-horiday {
     background-color: var(--HSL01-TABLE-GRID-HOLIDAY-COLOR);
 }
+
+#HSL01-table-fixed-side-contents .child-close-title {
+    text-decoration: underline;
+}
