@@ -81,8 +81,8 @@ class HSL01_Calender_Scroll {
             this._detaildate.scrollLeft = this._detailBody.scrollLeft;
         }
         if (dy) {
-            this._detailBody.scrollTop += dy;
-            this._calenderTitle.scrollTop = this._detailBody.scrollTop;
+            this._calenderTitle.scrollTop += dy;
+            this._detailBody.scrollTop = this._calenderTitle.scrollTop;
             // console.log(this._detailBody.scrollTop);
         }
         this._prevPos.x = x;
