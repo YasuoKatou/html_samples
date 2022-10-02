@@ -66,8 +66,8 @@ class MyEvent {
         this._logList = document.getElementById('log-list');
         this._scrollTag = document.getElementById('operation-aera');
     }
-    _getDateTime() {
-        const dt = new Date();
+    _getDateTime(timeStamp = null) {
+        const dt = (timeStamp === null)? new Date() : new Date(timeStamp);
         return ('0' + dt.getHours()).slice(-2) + ":" +
             ('0' + dt.getMinutes()).slice(-2) + ":" +
             ('0' + dt.getSeconds()).slice(-2) + "." +
@@ -95,7 +95,7 @@ class MyEvent {
     }
     _prevPos = null;
     mouseButtonDown(event) {
-        const logTime = this._getDateTime();
+        const logTime = this._getDateTime(event.timeStamp);
         this._cbxMouseUpDown.checked = true;
         this._prevPos = {x: event.clientX, y: event.clientY};
         this._lblClientX.textContent = this._prevPos.x;
@@ -103,7 +103,7 @@ class MyEvent {
         this._log(logTime, 'mouse down');
     }
     mouseButtonUp(event) {
-        const logTime = this._getDateTime();
+        const logTime = this._getDateTime(event.timeStamp);
         this._cbxMouseUpDown.checked = false;
         this._prevPos = null;
         this._log(logTime, 'mouse up');
@@ -114,7 +114,7 @@ class MyEvent {
         }
     }
     mouseLeave(event) {
-        const logTime = this._getDateTime();
+        const logTime = this._getDateTime(event.timeStamp);
         if (this._prevPos) {
             this._cbxMouseUpDown.checked = false;
             this._prevPos = null;
@@ -122,7 +122,7 @@ class MyEvent {
         }
     }
     touchStart(event) {
-        const logTime = this._getDateTime();
+        const logTime = this._getDateTime(event.timeStamp);
         this._cbxTouchStartEnd.checked = true;
         this._log(logTime, 'touch start');
         if (event.touches && event.touches[0]) {
@@ -131,7 +131,7 @@ class MyEvent {
         }
     }
     touchEnd(event) {
-        const logTime = this._getDateTime();
+        const logTime = this._getDateTime(event.timeStamp);
         this._cbxTouchStartEnd.checked = false;
         this._prevPos = null;
         this._log(logTime, 'touch end');
